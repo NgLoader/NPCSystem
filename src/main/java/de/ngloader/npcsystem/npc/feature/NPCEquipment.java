@@ -1,5 +1,7 @@
 package de.ngloader.npcsystem.npc.feature;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,12 +16,13 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.BukkitConverters;
 import com.comphenix.protocol.wrappers.EnumWrappers;
-import com.mojang.datafixers.util.Pair;
 
 import de.ngloader.npcsystem.NPC;
+import de.ngloader.npcsystem.util.ReflectionUtil;
 
 public class NPCEquipment extends NPCFeature {
 
+	private static final Constructor<?> CLASS_PAIR = ReflectionUtil.getConstructor(ReflectionUtil.getClass("com.mojang.datafixers.util.Pair"), Object.class, Object.class);
 	private static final ItemStack ITEM_AIR = new ItemStack(Material.AIR);
 
 	private final Map<EnumWrappers.ItemSlot, ItemStack> equipment = new HashMap<>();
@@ -32,12 +35,17 @@ public class NPCEquipment extends NPCFeature {
 		PacketContainer packet = this.protocolManager.createPacket(PacketType.Play.Server.ENTITY_EQUIPMENT);
 		packet.getIntegers().write(0, this.npc.getEntityId());
 
-		List<Pair<Object, Object>> list = new ArrayList<>();
+		List<Object> list = new ArrayList<>();
 		for (Entry<EnumWrappers.ItemSlot, ItemStack> entry : this.equipment.entrySet()) {
 			Object genericItemSlot = EnumWrappers.getItemSlotConverter().getGeneric(entry.getKey());
 			Object genericItemStack = BukkitConverters.getItemStackConverter().getGeneric(entry.getValue());
 
-			list.add(new Pair<Object, Object>(genericItemSlot, genericItemStack));
+			try {
+				list.add(CLASS_PAIR.newInstance(genericItemSlot, genericItemStack));
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e) {
+				e.printStackTrace();
+			}
 		}
 		packet.getModifier().write(1, list);
 		return packet;

@@ -8,7 +8,7 @@
 	<version>${revision}</version>
 
 	<properties>
-		<revision>1.1.1</revision>
+		<revision>0.0.0</revision>
 
 		<dependency.bukkit.version>1.16.5-R0.1-SNAPSHOT</dependency.bukkit.version>
 		<dependency.protocollib.version>4.5.1</dependency.protocollib.version>
@@ -32,6 +32,10 @@
 
 	<repositories>
 		<repository>
+			<id>spigot-repo</id>
+			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
 			<id>dmulloy2-repo</id>
 			<url>http://repo.dmulloy2.net/content/groups/public/</url>
 		</repository>
@@ -44,7 +48,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot</artifactId>
+			<artifactId>spigot-api</artifactId>
 			<version>${dependency.bukkit.version}</version>
 			<scope>provided</scope>
 		</dependency>

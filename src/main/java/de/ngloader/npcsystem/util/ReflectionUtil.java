@@ -6,6 +6,15 @@ import java.lang.reflect.Method;
 
 public class ReflectionUtil {
 
+	public static Class<?> getClass(String className) {
+		try {
+			return Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public static void setField(Object instance, String name, Object value) {
 		ReflectionUtil.setField(instance.getClass(), instance, name, value);
 	}

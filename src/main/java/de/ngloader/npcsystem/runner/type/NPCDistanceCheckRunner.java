@@ -31,6 +31,10 @@ public class NPCDistanceCheckRunner extends NPCRunner<NPC> {
 			}
 
 			NPC npc = npcs.get(this.taskIndex);
+			if (!npc.isCreated()) {
+				continue;
+			}
+
 			npc.checkInRange();
 
 			if (npcSize > 1) {

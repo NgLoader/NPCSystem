@@ -3,7 +3,6 @@ package de.ngloader.npcsystem.npc.entity;
 import java.util.Arrays;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_16_R3.util.CraftMagicNumbers.NBT;
 import org.bukkit.entity.Player;
 
 import com.comphenix.protocol.PacketType;
@@ -11,6 +10,10 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.EnumWrappers.NativeGameMode;
 import com.comphenix.protocol.wrappers.EnumWrappers.PlayerInfoAction;
+import com.comphenix.protocol.wrappers.PlayerInfoData;
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
+import com.comphenix.protocol.wrappers.WrappedSignedProperty;
 
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.feature.NPCEquipment;
@@ -19,11 +22,6 @@ import de.ngloader.npcsystem.runner.NPCRunnerType;
 import de.ngloader.npcsystem.runner.type.tablist.ITabListable;
 import de.ngloader.npcsystem.runner.type.tablist.NPCTabListRunner;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
-
-import com.comphenix.protocol.wrappers.PlayerInfoData;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import com.comphenix.protocol.wrappers.WrappedGameProfile;
-import com.comphenix.protocol.wrappers.WrappedSignedProperty;
 
 public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 
@@ -152,14 +150,6 @@ public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 
 	public void setMainHand(EnumWrappers.Hand hand) {
 		this.setMetadata(17, Byte.class, (byte) hand.ordinal());
-	}
-
-	public void setLeftShoulderEntityData(NBT nbt) {
-		// TODO implement
-	}
-
-	public void setRightShoulderEntityData(NBT nbt) {
-		// TODO implement
 	}
 
 	public void setGameMode(NativeGameMode gameMode) {

@@ -29,6 +29,10 @@ public class NPCLookRunner extends NPCRunner<NPCEntityLiving> {
 	@Override
 	public void run() {
 		for (NPCEntityLiving npc : this.npcs) {
+			if (!npc.isCreated()) {
+				continue;
+			}
+
 			Location npcLocation = npc.getLocation();
 			Location look = null;
 
