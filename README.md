@@ -15,7 +15,7 @@
 ## Developer
 
 ### Clone
-1. Clone this repo "git clone https://github.com/Imprex-Development/Orebfuscator.git"
+1. Clone this repo "git clone https://github.com/NgLoader/NPCSystem.git"
 2. Open eclipse and right click on the "Project Explorer"
 3. Click "Import..."
 4. Maven -> Existing Maven Projects
