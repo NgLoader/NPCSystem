@@ -119,19 +119,17 @@ public enum WrappedEntityId {
 			Field field = iRegestryClass.getField("ENTITY_TYPE");
 			Object entityTypes = field.get(null);
 			for (Method method : entityTypes.getClass().getDeclaredMethods()) {
-				if (method.getParameterCount() == 1 && method.getParameterTypes()[0].equals(entityTypesClass) && method.getReturnType() == int.class) {
-					Method entityTypesValuesMethod = entityTypesClass.getDeclaredMethod("values");
-					Object entityTypesArray = entityTypesValuesMethod.invoke(null);
-					for (Enum<?> obj : (Enum[]) entityTypesArray) {
-						if (obj.name().equals(this.name())) {
-							this.id = (int) method.invoke(entityTypesArray, obj);
+				if (method.getParameterCount() == 1 && method.getReturnType() == int.class) {
+					for (Field entityType : entityTypesClass.getFields()) {
+						if (entityType.getType().equals(entityTypesClass) && entityType.getName().equals(this.name())) {
+							this.id = (int) method.invoke(entityTypes, entityType.get(null));
 							break;
 						}
 					}
 					break;
 				}
 			}
-		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
     }

@@ -33,9 +33,9 @@ public enum WrappedEnumColor {
 			Object enums = method.invoke(null);
 			for (Enum<?> obj : (Enum[]) enums) {
 				if (obj.name().equals(this.name())) {
-					Method colorIndex = obj.getDeclaringClass().getDeclaredMethod("getColorIndex");
+					Method colorIndex = obj.getClass().getDeclaredMethod("getColorIndex");
 					colorIndex.setAccessible(true);
-					this.colorIndex = (byte) colorIndex.invoke(null);
+					this.colorIndex = Byte.valueOf(Integer.toString((int) colorIndex.invoke(obj)));
 					break;
 				}
 			}

@@ -10,6 +10,7 @@ import java.util.WeakHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
@@ -69,7 +70,7 @@ public abstract class NPC {
 		this.createSpawnPackets();
 		this.createDespawnPackets();
 
-		Bukkit.getPluginManager().callEvent(new NPCCreatedEvent(this));
+		this.callEvent(new NPCCreatedEvent(this));
 		return (T) this;
 	}
 
@@ -110,7 +111,7 @@ public abstract class NPC {
 	}
 
 	public void hide(Player player) {
-		Bukkit.getPluginManager().callEvent(new NPCVisibilityChangeEvent(player, this, false));
+		this.callEvent(new NPCVisibilityChangeEvent(player, this, false));
 
 		if (this.viewers.remove(player) && this.inRange.remove(player)) {
 			this.despawn(player);
@@ -120,7 +121,7 @@ public abstract class NPC {
 	}
 
 	public void show(Player player) {
-		Bukkit.getPluginManager().callEvent(new NPCVisibilityChangeEvent(player, this, true));
+		this.callEvent(new NPCVisibilityChangeEvent(player, this, true));
 
 		if (this.viewers.add(player) && this.isInRange(player.getLocation())) {
 			this.inRange.add(player);
@@ -189,6 +190,10 @@ public abstract class NPC {
 				runner.addNPC(this);
 			}
 		}
+	}
+
+	private void callEvent(Event event) {
+		Bukkit.getScheduler().runTask(this.registry.getNPCSystem().getPlugin(), () -> Bukkit.getPluginManager().callEvent(event));
 	}
 
 	public void destroy() {

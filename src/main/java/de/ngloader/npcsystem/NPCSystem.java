@@ -21,6 +21,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
+import de.ngloader.npcsystem.runner.NPCRunnerManager;
+import de.ngloader.npcsystem.runner.NPCRunnerType;
 import de.ngloader.npcsystem.util.MCReflectionUtil;
 import de.ngloader.npcsystem.util.ReflectionUtil;
 
@@ -49,8 +51,13 @@ public class NPCSystem implements Listener {
 		this.entityCount = (AtomicInteger) ENTITY_COUNT_FIELD.get(null);
 
 		this.defaultRegistry = new NPCRegistry(this);
+		NPCRunnerManager runnerManager = this.defaultRegistry.getRunnerManager();
+		for (NPCRunnerType type : NPCRunnerType.values()) {
+			runnerManager.addRunner(type);
+		}
+		runnerManager.startRunner();
 		this.registries.add(this.defaultRegistry);
-
+		
 		this.packetListener = new NPCPacketListener(this);
 
 		Bukkit.getPluginManager().registerEvents(this, this.plugin);
@@ -100,7 +107,9 @@ public class NPCSystem implements Listener {
 
 	protected void disable() {
 		this.packetListener.unregister();
-		this.registries.forEach(NPCRegistry::remove);
+		for (Iterator<NPCRegistry> iterator = this.registries.iterator(); iterator.hasNext();) {
+			iterator.next().remove();
+		}
 	}
 
 	public NPCRegistry getDefaultRegistry() {

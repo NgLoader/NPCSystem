@@ -38,4 +38,9 @@ public class NPCDistanceCheckRunner extends NPCRunner<NPC> {
 			}
 		}
 	}
+
+	@Override
+	public boolean addNPC(NPC npc) {
+		return this.npcs.add(npc);
+	}
 }

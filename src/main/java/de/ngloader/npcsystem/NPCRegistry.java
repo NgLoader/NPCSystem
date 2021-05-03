@@ -1,6 +1,7 @@
  package de.ngloader.npcsystem;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -38,7 +39,9 @@ public class NPCRegistry {
 		this.runnerManager.stopRunner();
 		this.runnerManager.destroy();
 
-		this.npcs.forEach(NPC::destroy);
+		for (Iterator<NPC> iterator = this.npcs.iterator(); iterator.hasNext();) {
+			iterator.next().destroy();
+		}
 		this.npcs.clear();
 	}
 
