@@ -1,0 +1,11 @@
+api-version: 1.13
+
+name: NPCSystem
+version: ${project.version}
+
+main: de.ngloader.npcsystem.NPCPlugin
+
+author: NgLoader
+
+depend: [ProtocolLib]
+loadbefore: [ProtocolLib]

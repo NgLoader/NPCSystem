@@ -1,0 +1,46 @@
+on:
+  push:
+    branches: ["**"]
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          server-id: github # value of repository/id field of the pom.xml
+          server-username: GITHUB_USER_REF  # env variable name for username
+          server-password: GITHUB_TOKEN_REF # env variable name for GitHub Personal Access Token
+ 
+    - name: BuildTools cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository/org/spigotmc/spigot
+        key: ${{ runner.os }}-maven-${{ hashFiles('./.github/workflows/buildtools.sh') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    - name: BuildTools
+      run: |
+        sh ./.github/workflows/buildtools.sh
+ 
+    - name: Build
+        run: |
+          mvn clean -B --also-make "-Drevision=$(git describe --tags `git rev-list --tags --max-count=1`)"
+          mkdir dist
+          mv target/npcsystem-*.jar ./dist
+        env:
+          GITHUB_USER_REF: ${{ secrets.GH_PACKAGE_REPO_USERNAME }}
+          GITHUB_TOKEN_REF: ${{ secrets.GH_PACKAGE_REPO_PASSWORD }}
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: Plugin
+        path: dist/
