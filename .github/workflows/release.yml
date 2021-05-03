@@ -28,7 +28,6 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('./.github/workflows/buildtools.sh') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-
     - name: BuildTools
       run: |
         sh ./.github/workflows/buildtools.sh
@@ -48,7 +47,13 @@ jobs:
         name: Release ${{ env.RELEASE_VERSION }}
         token: ${{ secrets.GH_PACKAGE_REPO_PASSWORD  }}
 
-    - name: Publish package
+
+    - name: Set up Java for publishing to GitHub Packages
+      uses: actions/setup-java@v2
+      with:
+        java-version: '1.8'
+        distribution: 'adopt'
+    - name: Publish to GitHub Packages
       run: mvn --batch-mode deploy
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_REPO_PASSWORD  }}
+        GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_REPO_PASSWORD }}
