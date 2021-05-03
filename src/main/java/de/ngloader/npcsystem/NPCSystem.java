@@ -107,9 +107,9 @@ public class NPCSystem implements Listener {
 
 	protected void disable() {
 		this.packetListener.unregister();
-		for (Iterator<NPCRegistry> iterator = this.registries.iterator(); iterator.hasNext();) {
-			iterator.next().remove();
-		}
+		List<NPCRegistry> registries = new ArrayList<>(this.registries);
+		registries.forEach(NPCRegistry::remove);
+		this.registries.clear();
 	}
 
 	public NPCRegistry getDefaultRegistry() {

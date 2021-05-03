@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.plugin.Plugin;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
@@ -25,6 +26,7 @@ import de.ngloader.npcsystem.runner.NPCRunnerType;
 
 public abstract class NPC {
 
+	protected final Plugin plugin;
 	protected final NPCSystem manager;
 	protected final NPCRegistry registry;
 	protected final ProtocolManager protocolManager;
@@ -48,6 +50,7 @@ public abstract class NPC {
 	public NPC(NPCRegistry registry) {
 		this.registry = registry;
 		this.manager = this.registry.getNPCSystem();
+		this.plugin = this.manager.getPlugin();
 		this.protocolManager = ProtocolLibrary.getProtocolManager();
 
 		this.entityId = this.manager.nextEntityCount();
@@ -193,7 +196,9 @@ public abstract class NPC {
 	}
 
 	private void callEvent(Event event) {
-		Bukkit.getScheduler().runTask(this.registry.getNPCSystem().getPlugin(), () -> Bukkit.getPluginManager().callEvent(event));
+		if (this.plugin.isEnabled()) {
+			Bukkit.getScheduler().runTask(this.plugin, () -> Bukkit.getPluginManager().callEvent(event));
+		}
 	}
 
 	public void destroy() {
