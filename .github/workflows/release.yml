@@ -34,13 +34,13 @@ jobs:
         sh ./.github/workflows/buildtools.sh
  
     - name: Build
-        run: |
-          mvn clean -B --also-make "-Drevision=$(git describe --tags `git rev-list --tags --max-count=1`)"
-          mkdir dist
-          mv target/npcsystem-*.jar ./dist
-        env:
-          GITHUB_USER_REF: ${{ secrets.GH_PACKAGE_REPO_USERNAME }}
-          GITHUB_TOKEN_REF: ${{ secrets.GH_PACKAGE_REPO_PASSWORD  }}
+      run: |
+        mvn clean -B --also-make "-Drevision=$(git describe --tags `git rev-list --tags --max-count=1`)"
+        mkdir dist
+        mv target/npcsystem-*.jar ./dist
+      env:
+        GITHUB_USER_REF: ${{ secrets.GH_PACKAGE_REPO_USERNAME }}
+        GITHUB_TOKEN_REF: ${{ secrets.GH_PACKAGE_REPO_PASSWORD  }}
 
     - uses: ncipollo/release-action@v1
       with:
