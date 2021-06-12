@@ -14,7 +14,7 @@ public class NPCPlugin extends JavaPlugin implements Listener {
 	private static NPCSystem npcSystem;
 
 	public static NPCSystem getInstance() {
-		return npcSystem;
+		return NPCPlugin.npcSystem;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class NPCPlugin extends JavaPlugin implements Listener {
 			}
 
 			NPCPlugin.npcSystem = new NPCSystem(this);
-			Bukkit.getServicesManager().register(NPCSystem.class, npcSystem, this, ServicePriority.Normal);
+			Bukkit.getServicesManager().register(NPCSystem.class, NPCPlugin.npcSystem, this, ServicePriority.Normal);
 
 			this.sendConsoleMessage("§aEnabled");
 		} catch (Exception e) {
@@ -42,8 +42,8 @@ public class NPCPlugin extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable() {
 		this.sendConsoleMessage("§cDisabling");
-		if (npcSystem != null) {
-			npcSystem.disable();
+		if (NPCPlugin.npcSystem != null) {
+			NPCPlugin.npcSystem.disable();
 		}
 		this.sendConsoleMessage("§cDisabled");
 	}
