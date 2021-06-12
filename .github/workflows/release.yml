@@ -16,10 +16,8 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v1
       with:
-        java-version: 1.8
-        server-id: github
-        server-username: GITHUB_USER_REF
-        server-password: GITHUB_TOKEN_REF
+        java-version: 16
+        distribution: 'adopt'
  
     - name: BuildTools cache
       uses: actions/cache@v2
@@ -47,12 +45,6 @@ jobs:
         name: Release ${{ env.RELEASE_VERSION }}
         token: ${{ secrets.GH_PACKAGE_REPO_PASSWORD  }}
 
-
-    - name: Set up Java for publishing to GitHub Packages
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
     - name: Publish to GitHub Packages
       run: mvn --batch-mode deploy "-Drevision=$(git describe --tags `git rev-list --tags --max-count=1`)"
       env:

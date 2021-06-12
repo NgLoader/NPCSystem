@@ -20,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import de.ngloader.npcsystem.runner.NPCRunnerManager;
 import de.ngloader.npcsystem.runner.NPCRunnerType;
@@ -62,7 +63,7 @@ public class NPCSystem implements Listener {
 
 		Bukkit.getPluginManager().registerEvents(this, this.plugin);
 
-		new Metrics(this.plugin, 11227);
+		new Metrics((JavaPlugin) this.plugin, 11227);
 	}
 
 	@EventHandler

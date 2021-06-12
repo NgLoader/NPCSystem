@@ -10,7 +10,7 @@ import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.NPCSpawnEntityLiving;
 import de.ngloader.npcsystem.npc.feature.NPCEquipment;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
-import de.ngloader.npcsystem.wrapper.WrappedEntityId;
+import net.minecraft.world.entity.EntityType;
 
 public class NPCArmorStand extends NPCSpawnEntityLiving {
 
@@ -19,7 +19,7 @@ public class NPCArmorStand extends NPCSpawnEntityLiving {
 	private final NPCEquipment equipment = new NPCEquipment(this, this::sendPacket);
 
 	public NPCArmorStand(NPCRegistry registry, Location location) {
-		super(registry, 0.97, location, WrappedEntityId.ARMOR_STAND);
+		super(registry, 0.97, location, EntityType.ARMOR_STAND);
 	}
 
 	public void setSmall(boolean small) {

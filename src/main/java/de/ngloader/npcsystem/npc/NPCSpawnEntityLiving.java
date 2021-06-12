@@ -7,15 +7,16 @@ import com.comphenix.protocol.events.PacketContainer;
 
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.type.NPCEntityLiving;
-import de.ngloader.npcsystem.wrapper.WrappedEntityId;
+import net.minecraft.core.Registry;
+import net.minecraft.world.entity.EntityType;
 
 public class NPCSpawnEntityLiving extends NPCEntityLiving {
 
 	private final int id;
 
-	public NPCSpawnEntityLiving(NPCRegistry registry, double eyeHeight, Location location, WrappedEntityId id) {
+	public NPCSpawnEntityLiving(NPCRegistry registry, double eyeHeight, Location location, EntityType<?> type) {
 		super(registry, eyeHeight, location);
-		this.id = id.getId();
+		this.id = Registry.ENTITY_TYPE.getId(type);
 	}
 
 	@Override

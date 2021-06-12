@@ -3,11 +3,11 @@ package de.ngloader.npcsystem.npc.type;
 import org.bukkit.Location;
 
 import de.ngloader.npcsystem.NPCRegistry;
-import de.ngloader.npcsystem.wrapper.WrappedEntityId;
+import net.minecraft.world.entity.EntityType;
 
 public class NPCWaterAnimal extends NPCPathfinderMob {
 
-	public NPCWaterAnimal(NPCRegistry registry, double eyeHeight, Location location, WrappedEntityId id) {
+	public NPCWaterAnimal(NPCRegistry registry, double eyeHeight, Location location, EntityType<?> id) {
 		super(registry, eyeHeight, location, id);
 	}
 }

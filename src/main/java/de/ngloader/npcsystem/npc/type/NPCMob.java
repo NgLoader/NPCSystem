@@ -5,11 +5,11 @@ import org.bukkit.Location;
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.NPCSpawnEntityLiving;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
-import de.ngloader.npcsystem.wrapper.WrappedEntityId;
+import net.minecraft.world.entity.EntityType;
 
 public class NPCMob extends NPCSpawnEntityLiving {
 
-	public NPCMob(NPCRegistry registry, double eyeHeight, Location location, WrappedEntityId id) {
+	public NPCMob(NPCRegistry registry, double eyeHeight, Location location, EntityType<?> id) {
 		super(registry, eyeHeight, location, id);
 	}
 

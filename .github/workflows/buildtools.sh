@@ -20,4 +20,4 @@ checkVersion () {
 	fi
 }
 
-checkVersion 1.16.5
+checkVersion 1.17
