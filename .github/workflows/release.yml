@@ -23,7 +23,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.m2/repository/org/spigotmc/spigot
-        key: ${{ runner.os }}-maven-${{ hashFiles('./.github/workflows/buildtools.sh') }}
+        key: ${{ runner.os }}-maven2-${{ hashFiles('./.github/workflows/buildtools.sh') }}
         restore-keys: |
           ${{ runner.os }}-maven-
     - name: BuildTools
