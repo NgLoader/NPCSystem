@@ -1,34 +1,5 @@
-pipeline {
-    agent any
-    tools {
-        maven 'Maven 3.8.1'
-        jdk 'jdk16'
-    }
-    stages {
-        stage ('Initialize') {
-            steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
-            }
-        }
-
-		stage ('BuildTools') {
-            steps {
-                sh ./.github/workflows/buildtools.sh
-            }
-        }
-
-        stage ('Build') {
-            steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install' 
-            }
-            post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml' 
-                }
-            }
-        }
-    }
+docker.image('3.8.1-openjdk-16').inside {
+  git '…your-sources…'
+  writeFile file: 'settings.xml', text: "<settings><localRepository>${pwd()}/.m2repo</localRepository></settings>"
+  sh 'mvn -B -s settings.xml clean install'
 }
