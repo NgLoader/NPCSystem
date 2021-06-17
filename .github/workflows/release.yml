@@ -46,6 +46,6 @@ jobs:
         token: ${{ secrets.GH_PACKAGE_REPO_PASSWORD  }}
 
     - name: Publish to GitHub Packages
-      run: mvn --batch-mode deploy "-Drevision=$(git describe --tags `git rev-list --tags --max-count=1`)"
+      run: mvn -s settings.xml --batch-mode deploy "-Drevision=$(git describe --tags `git rev-list --tags --max-count=1`)"
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_REPO_PASSWORD }}

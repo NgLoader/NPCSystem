@@ -21,8 +21,4 @@ checkVersion () {
 	fi
 }
 
-if [ $1 == "force" ]; then
-	build 1.17
-else
-	checkVersion 1.17
-fi
+checkVersion 1.17
