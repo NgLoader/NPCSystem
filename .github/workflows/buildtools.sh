@@ -3,6 +3,7 @@
 
 build () {
 	echo Building $1 ...
+	rm -rf $1
     mkdir $1
     cd $1
 
@@ -20,4 +21,8 @@ checkVersion () {
 	fi
 }
 
-checkVersion 1.17
+if [ $1 == "force" ]; then
+	build 1.17
+else
+	checkVersion 1.17
+fi
