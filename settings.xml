@@ -5,7 +5,7 @@
 	   <server>
 		  <id>nexus-releases</id>
 		  <username>deployment</username>
-		  <password>${NEXUS_DEPLOYMENT}</password>
+		  <password>${{ secrets.NEXUS_DEPLOYMENT }}</password>
 	   </server>
 	</servers>
 </settings>
