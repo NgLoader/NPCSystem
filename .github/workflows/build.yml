@@ -37,14 +37,11 @@ jobs:
         mvn clean package "-Drevision=$(git describe --tags `git rev-list --tags --max-count=1`)--SNAPSHOT"
         mkdir dist
         mv target/npcsystem-*.jar ./dist
-      env:
-        GITHUB_USER_REF: ${{ secrets.GH_PACKAGE_REPO_USERNAME }}
-        GITHUB_TOKEN_REF: ${{ secrets.GH_PACKAGE_REPO_PASSWORD }}
 
     - name: Create maven settings
       uses: s4u/maven-settings-action@v2.4.0
       with:
-        servers: '[{ "id": "nexus", "username": "deployment", "password": "${{ secrets.NEXUS_DEPLOYMENT }}" }]'
+        servers: '[{ "id": "nexus", "username": "${{ secrets.NEXUS_DEPLOYMENT_NAME }}", "password": "${{ secrets.NEXUS_DEPLOYMENT }}" }]'
     - name: Publish to Nexus snapshots
       run: mvn -Daether.connector.basic.threads=1 -s ~/.m2/settings.xml deploy "-Drevision=${{ steps.short-sha.outputs.sha }}-SNAPSHOT"
       env:

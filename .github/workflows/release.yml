@@ -34,15 +34,7 @@ jobs:
         mvn clean package "-Drevision=$(git describe --tags `git rev-list --tags --max-count=1`)"
         mkdir dist
         mv target/npcsystem-*.jar ./dist
-      env:
-        GITHUB_USER_REF: ${{ secrets.GH_PACKAGE_REPO_USERNAME }}
-        GITHUB_TOKEN_REF: ${{ secrets.GH_PACKAGE_REPO_PASSWORD  }}
 
-    - name: maven-settings-xml-action
-      uses: whelk-io/maven-settings-xml-action@v18
-      with:
-        servers: '[{ "id": "nexus", "username": "deployment", "password": "${{ secrets.NEXUS_DEPLOYMENT }}" }]'
- 
     - uses: ncipollo/release-action@v1
       with:
         artifacts: "dist/*"
@@ -52,7 +44,7 @@ jobs:
     - name: Create maven settings
       uses: s4u/maven-settings-action@v2.4.0
       with:
-        servers: '[{ "id": "nexus", "username": "deployment", "password": "${{ secrets.NEXUS_DEPLOYMENT }}" }]'
+        servers: '[{ "id": "nexus", "username": "${{ secrets.NEXUS_DEPLOYMENT_NAME }}", "password": "${{ secrets.NEXUS_DEPLOYMENT }}" }]'
     - name: Publish to Nexus releases
       run: mvn -Daether.connector.basic.threads=1 -s ~/.m2/settings.xml --batch-mode deploy "-Drevision=$(git describe --tags `git rev-list --tags --max-count=1`)"
       env:
