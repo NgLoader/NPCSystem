@@ -49,7 +49,11 @@ jobs:
         name: Release ${{ env.RELEASE_VERSION }}
         token: ${{ secrets.GH_PACKAGE_REPO_PASSWORD  }}
 
-    - name: Publish to GitHub Packages
+    - name: Create maven settings
+      uses: s4u/maven-settings-action@v2.4.0
+      with:
+        servers: '[{ "id": "nexus", "username": "deployment", "password": "${{ secrets.NEXUS_DEPLOYMENT }}" }]'
+    - name: Publish to Nexus releases
       run: mvn -Daether.connector.basic.threads=1 -s ~/.m2/settings.xml --batch-mode deploy "-Drevision=$(git describe --tags `git rev-list --tags --max-count=1`)"
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_REPO_PASSWORD }}

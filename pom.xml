@@ -31,16 +31,14 @@
 			<name>Nexus</name>
 			<url>https://nexus.wuffy.eu/repository/maven-releases</url>
 		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Nexus</name>
+			<url>https://nexus.wuffy.eu/repository/maven-snapshots</url>
+		</snapshotRepository>
 	</distributionManagement>
 
 	<repositories>
-		<repository>
-			<id>nexus</id>
-			<url>https://nexus.wuffy.eu/repository/maven-releases</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
 		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
