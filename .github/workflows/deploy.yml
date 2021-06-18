@@ -9,6 +9,10 @@ jobs:
     steps: 
     - name: Checkout
       uses: actions/checkout@v1
+    - uses: benjlevesque/short-sha@v1.2
+      id: short-sha
+      with:
+        length: 6
 
     - name: BuildTools cache
       uses: actions/cache@v2
