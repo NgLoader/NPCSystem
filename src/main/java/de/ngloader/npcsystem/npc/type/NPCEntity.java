@@ -36,7 +36,7 @@ public class NPCEntity extends NPC {
 	@Override
 	protected void createDespawnPackets() {
 		PacketContainer packet = this.protocolManager.createPacket(PacketType.Play.Server.ENTITY_DESTROY);
-		packet.getIntegerArrays().write(0, new int[] { this.entityId });
+		packet.getIntegers().write(0, this.entityId);
 		this.despawnPackets.add(packet);
 	}
 

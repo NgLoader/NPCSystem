@@ -10,7 +10,10 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.EnumWrappers.EntityUseAction;
+import com.comphenix.protocol.wrappers.EnumWrappers.Hand;
+import com.comphenix.protocol.wrappers.WrappedEnumEntityUseAction;
 
 import de.ngloader.npcsystem.event.NPCInteractEvent;
 
@@ -40,12 +43,10 @@ public class NPCPacketListener extends PacketAdapter {
 		if (npc != null) {
 			event.setCancelled(true);
 
-			EntityUseAction action = packet.getEntityUseActions().read(0);
-			if (action == EntityUseAction.ATTACK) {
-				this.callEvent(new NPCInteractEvent(event.getPlayer(), npc, action, null));
-			} else if (action == EntityUseAction.INTERACT) {
-				this.callEvent(new NPCInteractEvent(event.getPlayer(), npc, action, packet.getHands().read(0)));
-			}
+			WrappedEnumEntityUseAction useAction = packet.getEnumEntityUseActions().read(0); 
+			EntityUseAction action = useAction.getAction();                
+			Hand hand = action == EnumWrappers.EntityUseAction.ATTACK ? EnumWrappers.Hand.MAIN_HAND : useAction.getHand();
+			this.callEvent(new NPCInteractEvent(event.getPlayer(), npc, action, hand));
 		}
 	}
 

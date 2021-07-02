@@ -28,7 +28,7 @@ public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 	private final NPCEquipment equipment = new NPCEquipment(this, this::sendPacket);
 
 	private WrappedGameProfile gameProfile;
-	private NativeGameMode gameMode = NativeGameMode.NOT_SET;
+	private NativeGameMode gameMode = NativeGameMode.SPECTATOR;
 	private int latency = 0;
 
 	private boolean tabListVisiblity = false;
@@ -44,6 +44,7 @@ public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 		this.setFlag(EntityFlag.PLAYER_RIGHT_SLEEVE, true);
 		this.setFlag(EntityFlag.PLAYER_LEFT_PANTS_LEG, true);
 		this.setFlag(EntityFlag.PLAYER_RIGHT_PANTS_LEG, true);
+		this.setDirty();
 	}
 
 	@Override

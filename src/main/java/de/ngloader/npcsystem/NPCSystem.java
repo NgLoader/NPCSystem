@@ -24,12 +24,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.ngloader.npcsystem.runner.NPCRunnerManager;
 import de.ngloader.npcsystem.runner.NPCRunnerType;
-import de.ngloader.npcsystem.util.MCReflectionUtil;
-import de.ngloader.npcsystem.util.ReflectionUtil;
+import net.minecraft.world.entity.Entity;
 
 public class NPCSystem implements Listener {
 
-	private static final Field ENTITY_COUNT_FIELD = ReflectionUtil.getField(MCReflectionUtil.getMinecraftServerClass("Entity"), "entityCount");
+	private static Field ENTITY_COUNT_FIELD;
+
+	static {
+		for (Field field : Entity.class.getDeclaredFields()) {
+			if (field.getType().isAssignableFrom(AtomicInteger.class)) {
+				field.setAccessible(true);
+				ENTITY_COUNT_FIELD = field;
+			}
+		}
+	}
 
 	private final Plugin plugin;
 
