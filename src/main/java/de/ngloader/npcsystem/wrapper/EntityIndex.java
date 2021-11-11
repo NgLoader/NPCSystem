@@ -35,6 +35,7 @@ import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.monster.Blaze;
@@ -77,7 +78,6 @@ import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.MinecartCommandBlock;
 import net.minecraft.world.entity.vehicle.MinecartFurnace;
-import net.minecraft.world.level.block.FallingBlock;
 
 public enum EntityIndex {
 
@@ -102,7 +102,7 @@ public enum EntityIndex {
 
 	EYE_OF_ENDER_ITEM_8(EyeOfEnder.class),
 
-	FALLING_BLOCK_SPAWN_POSITION_8(FallingBlock.class),
+	FALLING_BLOCK_SPAWN_POSITION_8(FallingBlockEntity.class),
 
 	AREA_EFFECT_CLOUD_RADIUS_8(AreaEffectCloud.class),
 	AREA_EFFECT_CLOUD_COLOR_9(AreaEffectCloud.class),
