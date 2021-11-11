@@ -21,4 +21,4 @@ checkVersion () {
 	fi
 }
 
-checkVersion 1.17
+checkVersion 1.17.1
