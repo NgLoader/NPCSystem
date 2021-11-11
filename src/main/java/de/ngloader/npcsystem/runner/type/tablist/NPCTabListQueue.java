@@ -83,9 +83,7 @@ public class NPCTabListQueue implements Runnable {
 		Set<ITabListable> actionQueue = this.queue.get(action);
 		if (actionQueue == null) {
 			actionQueue = new HashSet<>();
-			actionQueue.add(tabListable);
 			this.queue.put(action, actionQueue);
-			return;
 		}
 		actionQueue.add(tabListable);
 	}

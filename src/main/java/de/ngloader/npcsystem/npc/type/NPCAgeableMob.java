@@ -3,6 +3,7 @@ package de.ngloader.npcsystem.npc.type;
 import org.bukkit.Location;
 
 import de.ngloader.npcsystem.NPCRegistry;
+import de.ngloader.npcsystem.wrapper.EntityIndex;
 import net.minecraft.world.entity.EntityType;
 
 public class NPCAgeableMob extends NPCMob {
@@ -12,6 +13,6 @@ public class NPCAgeableMob extends NPCMob {
 	}
 
 	public void setIsBaby(boolean baby) {
-		this.setMetadata(15, Boolean.class, baby);
+		this.setMetadata(EntityIndex.AGEABLE_MOB_IS_BABY_16, Boolean.class, baby);
 	}
 }

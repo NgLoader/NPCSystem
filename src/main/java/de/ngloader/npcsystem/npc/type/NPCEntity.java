@@ -1,5 +1,7 @@
 package de.ngloader.npcsystem.npc.type;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.bukkit.entity.Pose;
@@ -15,6 +17,7 @@ import de.ngloader.npcsystem.NPC;
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.wrapper.EntityAnimation;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
+import de.ngloader.npcsystem.wrapper.EntityIndex;
 import de.ngloader.npcsystem.wrapper.EntityStatus;
 
 public class NPCEntity extends NPC {
@@ -36,7 +39,9 @@ public class NPCEntity extends NPC {
 	@Override
 	protected void createDespawnPackets() {
 		PacketContainer packet = this.protocolManager.createPacket(PacketType.Play.Server.ENTITY_DESTROY);
-		packet.getIntegers().write(0, this.entityId);
+		List<Integer> destory = new ArrayList<>();
+		destory.add(this.entityId);
+		packet.getIntLists().write(0, destory);
 		this.despawnPackets.add(packet);
 	}
 
@@ -124,39 +129,41 @@ public class NPCEntity extends NPC {
 	}
 
 	public void setAirTicks(int ticks) {
-		this.setMetadata(1, Integer.class, ticks);
+		this.setMetadata(EntityIndex.ENTITY_AIR_TICKS_1, Integer.class, ticks);
 	}
 
 	public void setCustonNameVisible(boolean visible) {
-		this.setMetadata(3, Boolean.class, visible);
+		this.setMetadata(EntityIndex.ENTITY_IS_CUSTOM_NAME_VISIBLE_3, Boolean.class, visible);
 	}
 
 	public void setIsSilent(boolean isSilent) {
-		this.setMetadata(4, Boolean.class, isSilent);
+		this.setMetadata(EntityIndex.ENTITY_IS_SILENT_4, Boolean.class, isSilent);
 	}
 
 	public void setHasNoGravity(boolean noGravity) {
-		this.setMetadata(5, Boolean.class, noGravity);
+		this.setMetadata(EntityIndex.ENTITY_HAS_NO_GRAVITY_5, Boolean.class, noGravity);
 	}
 
 	public void setPose(Pose pose) {
-		this.setMetadata(6, Integer.class, pose.ordinal());
+		this.setMetadata(EntityIndex.ENTITY_POSE_6, Integer.class, pose.ordinal());
 	}
 
-	public void setMetadata(int index, Class<?> type, Object value) {
-		if (!this.dataWatcher.hasIndex(index)) {
-			this.dataWatcher.setObject(new WrappedDataWatcherObject(index, WrappedDataWatcher.Registry.get(type)), value);
+	public void setMetadata(EntityIndex index, Class<?> type, Object value) {
+		int realIndex = index.getIndex();
+		if (!this.dataWatcher.hasIndex(realIndex)) {
+			this.dataWatcher.setObject(new WrappedDataWatcherObject(realIndex, WrappedDataWatcher.Registry.get(type)), value);
 			return;
 		}
-		this.dataWatcher.setObject(index, value);
+		this.dataWatcher.setObject(realIndex, value);
 	}
 
-	public void setMetadata(int index, Serializer serializer, Object value) {
-		if (!this.dataWatcher.hasIndex(index)) {
-			this.dataWatcher.setObject(new WrappedDataWatcherObject(index, serializer), value);
+	public void setMetadata(EntityIndex index, Serializer serializer, Object value) {
+		int realIndex = index.getIndex();
+		if (!this.dataWatcher.hasIndex(realIndex)) {
+			this.dataWatcher.setObject(new WrappedDataWatcherObject(realIndex, serializer), value);
 			return;
 		}
-		this.dataWatcher.setObject(index, value);
+		this.dataWatcher.setObject(realIndex, value);
 	}
 
 	public <T> T getMetadata(Class<T> type, int index) {

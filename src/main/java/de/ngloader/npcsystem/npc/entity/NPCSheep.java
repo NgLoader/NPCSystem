@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.type.NPCAnimal;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
+import de.ngloader.npcsystem.wrapper.EntityIndex;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
 
@@ -19,6 +20,6 @@ public class NPCSheep extends NPCAnimal {
 	}
 
 	public void setColor(DyeColor color) {
-		this.setMetadata(EntityFlag.SHEEP_COLOR_ID.getIndex(), Byte.class, color.getId());
+		this.setMetadata(EntityIndex.SHEEP_FLAG_17, Byte.class, color.getId());
 	}
 }

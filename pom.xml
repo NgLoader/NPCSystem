@@ -8,9 +8,9 @@
 	<version>${revision}</version>
 
 	<properties>
-		<revision>1.0.6</revision>
+		<revision>1.6.0</revision>
 
-		<dependency.bukkit.version>1.17-R0.1-SNAPSHOT</dependency.bukkit.version>
+		<dependency.bukkit.version>1.17.1-R0.1-SNAPSHOT</dependency.bukkit.version>
 		<dependency.protocollib.version>4.7.0-SNAPSHOT</dependency.protocollib.version>
 		<dependency.bstats.version>2.2.1</dependency.bstats.version>
 
@@ -95,27 +95,6 @@
 
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.3.0-SNAPSHOT</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<relocations>
-						<relocation>
-							<pattern>org.bstats</pattern>
-							<shadedPattern>de.ngloader.npcsystem</shadedPattern>
-						</relocation>
-					</relocations>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>net.md-5</groupId>
 				<artifactId>specialsource-maven-plugin</artifactId>
 				<version>${plugin.specialsource.version}</version>
@@ -147,6 +126,27 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.3.0-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<relocations>
+						<relocation>
+							<pattern>org.bstats</pattern>
+							<shadedPattern>de.ngloader.npcsystem</shadedPattern>
+						</relocation>
+					</relocations>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -11,6 +11,7 @@ import com.comphenix.protocol.wrappers.BlockPosition;
 
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
+import de.ngloader.npcsystem.wrapper.EntityIndex;
 
 public class NPCEntityLiving extends NPCEntity {
 
@@ -105,7 +106,7 @@ public class NPCEntityLiving extends NPCEntity {
 	}
 
 	public void setHealth(float health) {
-		this.setMetadata(8, Float.class, health);
+		this.setMetadata(EntityIndex.LIVING_ENTITY_HEALTH_9, Float.class, health);
 	}
 
 	public void setPotionEffectColor(Color color) {
@@ -113,19 +114,19 @@ public class NPCEntityLiving extends NPCEntity {
 	}
 
 	public void setPotionEffectColor(int color) {
-		this.setMetadata(9, Integer.class, color);
+		this.setMetadata(EntityIndex.LIVING_ENTITY_POTION_EFFECT_COLOR_10, Integer.class, color);
 	}
 
 	public void setPotionEffectAmbient(boolean ambient) {
-		this.setMetadata(10, Boolean.class, ambient);
+		this.setMetadata(EntityIndex.LIVING_ENTITY_IS_POTION_EFFECT_AMBIENT_11, Boolean.class, ambient);
 	}
 
 	public void setNumberOfArrowsInEntity(int arrows) {
-		this.setMetadata(11, Integer.class, arrows);
+		this.setMetadata(EntityIndex.LIVING_ENTITY_NUMBER_OF_ARROWS_IN_ENTITY_12, Integer.class, arrows);
 	}
 
-	public void setHealthAddedByAbsorption(int added) {
-		this.setMetadata(12, Integer.class, added);
+	public void setNumberOfBeeStringers(int arrows) {
+		this.setMetadata(EntityIndex.LIVING_ENTITY_NUMBER_OF_BEE_STRINGERS_IN_ENTITY_13, Integer.class, arrows);
 	}
 
 	public void setBedLocation(Location location) {
@@ -137,7 +138,7 @@ public class NPCEntityLiving extends NPCEntity {
 	}
 
 	public void setBedLocation(BlockPosition position) {
-		this.setMetadata(13, BlockPosition.class, position);
+		this.setMetadata(EntityIndex.LIVING_ENTITY_LOCATION_OF_THE_BED_14, BlockPosition.class, position);
 	}
 
 	public void setUUID(UUID uuid) {

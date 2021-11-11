@@ -1,6 +1,8 @@
 package de.ngloader.npcsystem.npc.entity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -22,6 +24,7 @@ import de.ngloader.npcsystem.runner.NPCRunnerType;
 import de.ngloader.npcsystem.runner.type.tablist.ITabListable;
 import de.ngloader.npcsystem.runner.type.tablist.NPCTabListRunner;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
+import de.ngloader.npcsystem.wrapper.EntityIndex;
 
 public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 
@@ -51,11 +54,13 @@ public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 	protected void createSpawnPackets() {
 		PacketContainer playerInfoPacket = this.protocolManager.createPacket(PacketType.Play.Server.PLAYER_INFO);
 		playerInfoPacket.getPlayerInfoAction().write(0, PlayerInfoAction.ADD_PLAYER);
-		playerInfoPacket.getPlayerInfoDataLists().write(0, Arrays.asList(new PlayerInfoData(
+		List<PlayerInfoData> playerInfoData = new ArrayList<>();
+		playerInfoData.add(new PlayerInfoData(
 				this.gameProfile,
 				this.latency,
 				this.gameMode,
-				WrappedChatComponent.fromText(this.gameProfile.getName()))));
+				WrappedChatComponent.fromText(this.gameProfile.getName())));
+		playerInfoPacket.getPlayerInfoDataLists().write(0, playerInfoData);
 		this.spawnPackets.add(playerInfoPacket);
 
 		PacketContainer namedEntitySpawnPacket = this.protocolManager.createPacket(PacketType.Play.Server.NAMED_ENTITY_SPAWN);
@@ -114,11 +119,11 @@ public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 	}
 
 	public void setAdditionalHearts(float hearts) {
-		this.setMetadata(14, Float.class, hearts);
+		this.setMetadata(EntityIndex.PLAYER_ADDITIONAL_HEARTS_15, Float.class, hearts);
 	}
 
 	public void setScore(int score) {
-		this.setMetadata(15, Integer.class, score);
+		this.setMetadata(EntityIndex.PLAYER_SCORE_16, Integer.class, score);
 	}
 
 	public void setSkinPartCape(boolean enabled) {
@@ -150,7 +155,7 @@ public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 	}
 
 	public void setMainHand(EnumWrappers.Hand hand) {
-		this.setMetadata(17, Byte.class, (byte) hand.ordinal());
+		this.setMetadata(EntityIndex.PLAYER_MAIN_HAND_18, Byte.class, (byte) hand.ordinal());
 	}
 
 	public void setGameMode(NativeGameMode gameMode) {

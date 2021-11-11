@@ -10,6 +10,7 @@ import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.NPCSpawnEntityLiving;
 import de.ngloader.npcsystem.npc.feature.NPCEquipment;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
+import de.ngloader.npcsystem.wrapper.EntityIndex;
 import net.minecraft.world.entity.EntityType;
 
 public class NPCArmorStand extends NPCSpawnEntityLiving {
@@ -39,27 +40,27 @@ public class NPCArmorStand extends NPCSpawnEntityLiving {
 	}
 
 	public void setHeadRotation(Vector3F vector) {
-		this.setMetadata(15, VECTOR3F_SERIALIZER, vector);
+		this.setMetadata(EntityIndex.ARMORSTAND_HEAD_ROTATION_16, VECTOR3F_SERIALIZER, vector);
 	}
 
 	public void seBodyRotation(Vector3F vector) {
-		this.setMetadata(16, VECTOR3F_SERIALIZER, vector);
+		this.setMetadata(EntityIndex.ARMORSTAND_BODY_ROTATION_17, VECTOR3F_SERIALIZER, vector);
 	}
 
 	public void setLeftArmRotation(Vector3F vector) {
-		this.setMetadata(17, VECTOR3F_SERIALIZER, vector);
+		this.setMetadata(EntityIndex.ARMORSTAND_LEFT_ARM_ROTATION_18, VECTOR3F_SERIALIZER, vector);
 	}
 
 	public void setRightArmRotation(Vector3F vector) {
-		this.setMetadata(18, VECTOR3F_SERIALIZER, vector);
+		this.setMetadata(EntityIndex.ARMORSTAND_RIGHT_ARM_ROTATION_19, VECTOR3F_SERIALIZER, vector);
 	}
 
 	public void setLeftLegRotation(Vector3F vector) {
-		this.setMetadata(19, VECTOR3F_SERIALIZER, vector);
+		this.setMetadata(EntityIndex.ARMORSTAND_LEFT_LEG_ROTATION_20, VECTOR3F_SERIALIZER, vector);
 	}
 
 	public void setRightLegRotation(Vector3F vector) {
-		this.setMetadata(20, VECTOR3F_SERIALIZER, vector);
+		this.setMetadata(EntityIndex.ARMORSTAND_RIGHT_LEG_ROTATION_21, VECTOR3F_SERIALIZER, vector);
 	}
 
 	public NPCEquipment getEquipment() {
