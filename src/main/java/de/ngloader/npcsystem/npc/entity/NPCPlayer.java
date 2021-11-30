@@ -94,26 +94,6 @@ public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 	}
 
 	@Override
-	protected void onSpawn(Player player) {
-		if (!this.tabListVisiblity) {
-			NPCTabListRunner tabListRunner = this.registry.getRunnerManager().getRunner(NPCRunnerType.TABLIST);
-			if (tabListRunner != null) {
-				tabListRunner.queue(player, PlayerInfoAction.REMOVE_PLAYER, this);
-			}
-		}
-	}
-
-	@Override
-	public void onDespawn(Player player) {
-		if (!this.tabListVisiblity) {
-			NPCTabListRunner tabListRunner = this.registry.getRunnerManager().getRunner(NPCRunnerType.TABLIST);
-			if (tabListRunner != null) {
-				tabListRunner.queue(player, PlayerInfoAction.REMOVE_PLAYER, this);
-			}
-		}
-	}
-
-	@Override
 	public PlayerInfoData getPlayerInfoData() {
 		return new PlayerInfoData(this.getGameProfile(), this.latency, this.gameMode, WrappedChatComponent.fromText(this.getGameProfile().getName()));
 	}

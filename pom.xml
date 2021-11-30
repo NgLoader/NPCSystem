@@ -8,10 +8,10 @@
 	<version>${revision}</version>
 
 	<properties>
-		<revision>1.6.1</revision>
+		<revision>1.6.7</revision>
 
-		<dependency.bukkit.version>1.17.1-R0.1-SNAPSHOT</dependency.bukkit.version>
-		<dependency.protocollib.version>4.7.0-SNAPSHOT</dependency.protocollib.version>
+		<dependency.bukkit.version>1.18-R0.1-SNAPSHOT</dependency.bukkit.version>
+		<dependency.protocollib.version>4.8.0-SNAPSHOT</dependency.protocollib.version>
 		<dependency.bstats.version>2.2.1</dependency.bstats.version>
 
 		<plugin.specialsource.version>1.2.2</plugin.specialsource.version>
@@ -61,6 +61,12 @@
 	</pluginRepositories>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot-api</artifactId>
+			<version>${dependency.bukkit.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot</artifactId>

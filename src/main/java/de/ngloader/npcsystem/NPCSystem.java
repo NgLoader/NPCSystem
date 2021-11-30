@@ -24,17 +24,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.ngloader.npcsystem.runner.NPCRunnerManager;
 import de.ngloader.npcsystem.runner.NPCRunnerType;
+import de.ngloader.npcsystem.runner.type.tablist.NPCTabListRunner;
 import net.minecraft.world.entity.Entity;
 
 public class NPCSystem implements Listener {
 
-	private static Field ENTITY_COUNT_FIELD;
+	private static Field fieldEntityCount;
 
 	static {
 		for (Field field : Entity.class.getDeclaredFields()) {
 			if (field.getType().isAssignableFrom(AtomicInteger.class)) {
 				field.setAccessible(true);
-				ENTITY_COUNT_FIELD = field;
+				fieldEntityCount = field;
 			}
 		}
 	}
@@ -57,7 +58,7 @@ public class NPCSystem implements Listener {
 	public NPCSystem(Plugin plugin) throws IllegalArgumentException, IllegalAccessException {
 		this.plugin = plugin;
 
-		this.entityCount = (AtomicInteger) ENTITY_COUNT_FIELD.get(null);
+		this.entityCount = (AtomicInteger) fieldEntityCount.get(null);
 
 		this.defaultRegistry = new NPCRegistry(this);
 		NPCRunnerManager runnerManager = this.defaultRegistry.getRunnerManager();
@@ -76,18 +77,23 @@ public class NPCSystem implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		Player player = event.getPlayer();
-		Bukkit.getScheduler().runTaskLater(this.plugin, () -> {
-			if (player.isOnline()) {
-				this.defaultRegistry.showAll(event.getPlayer());
-			}
-		}, 20);
+		this.defaultRegistry.showAll(event.getPlayer());
 	}
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
+		this.packetListener.onPlayerDisconnect(player);
 		this.registries.forEach(registry -> registry.hideAll(player));
+	}
+
+	void callFirstMove(Player player) {
+		this.registries.forEach(registry -> {
+			NPCTabListRunner runner = registry.getRunnerManager().getRunner(NPCRunnerType.TABLIST);
+			if (runner != null) {
+				runner.onFirstMove(player);
+			}
+		});
 	}
 
 	public NPCRegistry createRegestry() {

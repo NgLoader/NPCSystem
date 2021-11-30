@@ -27,6 +27,9 @@ public class NPCTabListQueue implements Runnable {
 
 	public final Map<PlayerInfoAction, Set<ITabListable>> queue = new HashMap<>();
 
+	private long maxDespawnHold = System.currentTimeMillis() + 15000;
+	boolean sendRemovePacket = false;
+
 	public NPCTabListQueue(NPCTabListRunner tabListManager, Player player) {
 		this.player = player;
 
@@ -41,6 +44,12 @@ public class NPCTabListQueue implements Runnable {
 			if (queue == null || queue.isEmpty()) {
 				iterator.remove();
 				return;
+			} else if (entry.getKey() == PlayerInfoAction.REMOVE_PLAYER && !this.sendRemovePacket) {
+				if (this.maxDespawnHold < System.currentTimeMillis()) {
+					this.sendRemovePacket = true;
+				} else {
+					continue;
+				}
 			}
 
 			Set<ITabListable> tabListableRemoved = new HashSet<ITabListable>(queue);
@@ -62,15 +71,6 @@ public class NPCTabListQueue implements Runnable {
 		PacketContainer packetContainer = this.protocolManager.createPacket(PacketType.Play.Server.PLAYER_INFO);
 		packetContainer.getPlayerInfoAction().write(0, action);
 		packetContainer.getPlayerInfoDataLists().write(0, playerInfoDatas);
-
-		if (action == PlayerInfoAction.REMOVE_PLAYER) {
-			try {
-				this.protocolManager.sendServerPacket(player, packetContainer);
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
-			return;
-		}
 
 		try {
 			this.protocolManager.sendServerPacket(player, packetContainer);

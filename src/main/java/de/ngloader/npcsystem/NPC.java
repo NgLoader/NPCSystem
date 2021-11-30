@@ -256,6 +256,10 @@ public abstract class NPC {
 		return this.manager;
 	}
 
+	public NPCRegistry getRegistry() {
+		return this.registry;
+	}
+
 	public int getEntityId() {
 		return this.entityId;
 	}

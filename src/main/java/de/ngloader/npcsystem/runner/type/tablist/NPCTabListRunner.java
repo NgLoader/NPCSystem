@@ -17,8 +17,6 @@ import de.ngloader.npcsystem.runner.NPCRunner;
 
 public class NPCTabListRunner extends NPCRunner<ITabListable> implements Listener {
 
-	public static final int MIN_JOIN_TIME_IN_TICKS = 80; //4 seconds (in ticks)
-
 	private final Map<Player, NPCTabListQueue> queue = new WeakHashMap<>();
 
 	public NPCTabListRunner(NPCRegistry registry) {
@@ -40,6 +38,13 @@ public class NPCTabListRunner extends NPCRunner<ITabListable> implements Listene
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		this.queue.remove(event.getPlayer());
+	}
+
+	public void onFirstMove(Player player) {
+		NPCTabListQueue queue = this.queue.get(player);
+		if (queue != null) {
+			queue.sendRemovePacket = true;
+		}
 	}
 
 	public void queue(Player player, PlayerInfoAction action, ITabListable tabListable) {

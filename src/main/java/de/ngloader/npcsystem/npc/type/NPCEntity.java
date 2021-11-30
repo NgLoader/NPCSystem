@@ -93,11 +93,11 @@ public class NPCEntity extends NPC {
 
 	public void setCustomName(String name) {
 		Optional<?> optional = name != null ? Optional.of(WrappedChatComponent.fromText(name).getHandle()) : Optional.empty();
-		if (!this.dataWatcher.hasIndex(2)) {
+		if (!this.dataWatcher.hasIndex(EntityIndex.ENTITY_CUSTOM_NAME_2.getIndex())) {
 			this.dataWatcher.setObject(new WrappedDataWatcherObject(2, WrappedDataWatcher.Registry.getChatComponentSerializer(true)), optional);
 			return;
 		}
-		this.dataWatcher.setObject(2, optional);
+		this.dataWatcher.setObject(EntityIndex.ENTITY_CUSTOM_NAME_2.getIndex(), optional);
 	}
 
 	public void setIsOnFire(boolean onFire) {
