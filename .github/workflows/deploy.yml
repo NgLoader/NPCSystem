@@ -20,10 +20,10 @@ jobs:
         path: ~/.m2/repository/org/spigotmc
         key: ${{ runner.os }}-maven-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./.github/workflows/buildtools.sh') }}
 
-    - name: Set up JDK 16
+    - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '16'
+        java-version: '17'
         distribution: 'adopt'
   
     - name: Create maven settings
