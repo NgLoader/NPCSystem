@@ -8,9 +8,9 @@
 	<version>${revision}</version>
 
 	<properties>
-		<revision>1.6.7</revision>
+		<revision>1.6.8</revision>
 
-		<dependency.bukkit.version>1.18-R0.1-SNAPSHOT</dependency.bukkit.version>
+		<dependency.bukkit.version>1.18.2-R0.1-SNAPSHOT</dependency.bukkit.version>
 		<dependency.protocollib.version>4.8.0-SNAPSHOT</dependency.protocollib.version>
 		<dependency.bstats.version>2.2.1</dependency.bstats.version>
 

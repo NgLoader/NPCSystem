@@ -1,10 +1,12 @@
 package de.ngloader.npcsystem;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
@@ -24,7 +26,6 @@ import com.comphenix.protocol.wrappers.WrappedEnumEntityUseAction;
 import de.ngloader.npcsystem.event.NPCInteractEvent;
 import de.ngloader.npcsystem.npc.entity.NPCPlayer;
 import de.ngloader.npcsystem.runner.NPCRunnerType;
-import de.ngloader.npcsystem.runner.type.tablist.NPCTabListRunner;
 
 public class NPCPacketListener extends PacketAdapter {
 
@@ -32,7 +33,8 @@ public class NPCPacketListener extends PacketAdapter {
 	private final ProtocolManager protocolManager;
 	private final PluginManager pluginManager;
 
-	private final Set<Player> firstMove = Collections.newSetFromMap(new WeakHashMap<>());
+	private final Set<Player> firstMoveFinish = Collections.newSetFromMap(new WeakHashMap<>());
+	private final Map<Player, Location> firstMove = new WeakHashMap<>();
 
 	public NPCPacketListener(NPCSystem system) {
 		super(system.getPlugin(), PacketType.Play.Client.USE_ENTITY, PacketType.Play.Client.POSITION, PacketType.Play.Server.NAMED_ENTITY_SPAWN);
@@ -48,6 +50,7 @@ public class NPCPacketListener extends PacketAdapter {
 	}
 
 	public void onPlayerDisconnect(Player player) {
+		this.firstMoveFinish.remove(player);
 		this.firstMove.remove(player);
 	}
 
@@ -55,8 +58,19 @@ public class NPCPacketListener extends PacketAdapter {
 	public void onPacketReceiving(PacketEvent event) {
 		PacketContainer packet = event.getPacket();
 		if (event.getPacketType() == PacketType.Play.Client.POSITION) {
-			if (this.firstMove.add(event.getPlayer())) {
-				this.system.callFirstMove(event.getPlayer());
+			Player player = event.getPlayer();
+			if (!firstMoveFinish.contains(player)) {
+				Location location = this.firstMove.get(player);
+				if (location == null) {
+					this.firstMove.put(player, player.getLocation());
+				} else if (!location.getWorld().equals(player.getWorld())) {
+					this.firstMove.put(player, player.getLocation());
+				} else if (!location.equals(event.getPlayer().getLocation())) {
+					this.firstMove.remove(player);
+					this.firstMoveFinish.add(player);
+
+					this.system.callFirstMove(player);
+				}
 			}
 		} else {
 			NPC npc = this.system.npcByEntityId.get(packet.getIntegers().read(0));
@@ -76,13 +90,7 @@ public class NPCPacketListener extends PacketAdapter {
 		PacketContainer packet = event.getPacket();
 		NPC npc = this.system.npcByEntityId.get(packet.getIntegers().read(0));
 		if (npc != null && npc instanceof NPCPlayer npcPlayer) {
-			if (!npcPlayer.isTabListVisiblity()) {
-				NPCTabListRunner runner = npcPlayer.getRegistry().getRunnerManager().getRunner(NPCRunnerType.TABLIST);
-				if (runner != null) {
-//					Player player = event.getPlayer();
-					Bukkit.getScheduler().runTask(this.plugin, () -> runner.queue(event.getPlayer(), PlayerInfoAction.REMOVE_PLAYER, npcPlayer));
-				}
-			}
+//			npcPlayer.getRegistry().queueUpdate(event.getPlayer(), NPCRunnerType.TABLIST, PlayerInfoAction.REMOVE_PLAYER, npcPlayer);
 		}
 	}
 

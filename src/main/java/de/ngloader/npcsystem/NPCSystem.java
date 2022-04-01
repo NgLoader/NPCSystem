@@ -36,6 +36,7 @@ public class NPCSystem implements Listener {
 			if (field.getType().isAssignableFrom(AtomicInteger.class)) {
 				field.setAccessible(true);
 				fieldEntityCount = field;
+				break;
 			}
 		}
 	}
@@ -103,11 +104,15 @@ public class NPCSystem implements Listener {
 	}
 
 	public UUID generateUUID() {
-		long mostSigBits;
-		do
+		long mostSigBits = System.currentTimeMillis();
+		while (!uuidInUse.add(mostSigBits)) {
 			mostSigBits = this.random.nextLong();
-		while (!uuidInUse.add(mostSigBits));
+		}
 		return new UUID(mostSigBits, 0);
+	}
+
+	public boolean giveBackUUID(UUID uuid) {
+		return this.uuidInUse.remove(uuid.getMostSignificantBits());
 	}
 
 	protected int nextEntityCount() {

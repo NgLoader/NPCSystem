@@ -101,4 +101,12 @@ public class NPCLookRunner extends NPCRunner<NPCEntityLiving> {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean removeNPC(NPC npc) {
+		if (npc instanceof NPCEntityLiving) {
+			return this.removeNPC((NPCEntityLiving) npc);
+		}
+		return false;
+	}
 }

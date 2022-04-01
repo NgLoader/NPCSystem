@@ -5,40 +5,29 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers;
-import com.comphenix.protocol.wrappers.EnumWrappers.NativeGameMode;
 import com.comphenix.protocol.wrappers.EnumWrappers.PlayerInfoAction;
 import com.comphenix.protocol.wrappers.PlayerInfoData;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
-import com.comphenix.protocol.wrappers.WrappedSignedProperty;
 
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.feature.NPCEquipment;
 import de.ngloader.npcsystem.npc.type.NPCEntityLiving;
-import de.ngloader.npcsystem.runner.NPCRunnerType;
-import de.ngloader.npcsystem.runner.type.tablist.ITabListable;
-import de.ngloader.npcsystem.runner.type.tablist.NPCTabListRunner;
+import de.ngloader.npcsystem.runner.type.tablist.NPCTabListable;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
 import de.ngloader.npcsystem.wrapper.EntityIndex;
 
-public class NPCPlayer extends NPCEntityLiving implements ITabListable {
+public class NPCPlayer extends NPCEntityLiving {
 
 	private final NPCEquipment equipment = new NPCEquipment(this, this::sendPacket);
+	private final NPCTabListable tabListable = new NPCTabListable(this);
 
-	private WrappedGameProfile gameProfile;
-	private NativeGameMode gameMode = NativeGameMode.SPECTATOR;
-	private int latency = 0;
-
-	private boolean tabListVisiblity = false;
-
-	public NPCPlayer(NPCRegistry registry, String name, Location location) {
+	public NPCPlayer(NPCRegistry registry, Location location, String name) {
 		super(registry, 1.62d, location);
-		this.gameProfile = new WrappedGameProfile(this.uuid, name);
+		this.tabListable.setGameProfile(new WrappedGameProfile(this.uuid, name));
 
 		this.setFlag(EntityFlag.PLAYER_HAT, true);
 		this.setFlag(EntityFlag.PLAYER_CAPE, true);
@@ -55,11 +44,7 @@ public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 		PacketContainer playerInfoPacket = this.protocolManager.createPacket(PacketType.Play.Server.PLAYER_INFO);
 		playerInfoPacket.getPlayerInfoAction().write(0, PlayerInfoAction.ADD_PLAYER);
 		List<PlayerInfoData> playerInfoData = new ArrayList<>();
-		playerInfoData.add(new PlayerInfoData(
-				this.gameProfile,
-				this.latency,
-				this.gameMode,
-				WrappedChatComponent.fromText(this.gameProfile.getName())));
+		playerInfoData.add(this.tabListable.getPlayerInfoData());
 		playerInfoPacket.getPlayerInfoDataLists().write(0, playerInfoData);
 		this.spawnPackets.add(playerInfoPacket);
 
@@ -87,15 +72,17 @@ public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 	protected void createDespawnPackets() {
 		PacketContainer playerInfoPacket = this.protocolManager.createPacket(PacketType.Play.Server.PLAYER_INFO);
 		playerInfoPacket.getPlayerInfoAction().write(0, PlayerInfoAction.REMOVE_PLAYER);
-		playerInfoPacket.getPlayerInfoDataLists().write(0, Arrays.asList(this.getPlayerInfoData()));
+		playerInfoPacket.getPlayerInfoDataLists().write(0, Arrays.asList(this.tabListable.getPlayerInfoData()));
 		this.despawnPackets.add(playerInfoPacket);
 
 		super.createDespawnPackets();
 	}
 
 	@Override
-	public PlayerInfoData getPlayerInfoData() {
-		return new PlayerInfoData(this.getGameProfile(), this.latency, this.gameMode, WrappedChatComponent.fromText(this.getGameProfile().getName()));
+	protected void onDestroy() {
+		super.onDestroy();
+
+		this.tabListable.destroy();
 	}
 
 	public void setAdditionalHearts(float hearts) {
@@ -138,67 +125,11 @@ public class NPCPlayer extends NPCEntityLiving implements ITabListable {
 		this.setMetadata(EntityIndex.PLAYER_MAIN_HAND_18, Byte.class, (byte) hand.ordinal());
 	}
 
-	public void setGameMode(NativeGameMode gameMode) {
-		this.gameMode = gameMode;
-	}
-
-	public void setLatency(int latency) {
-		this.latency = latency;
-	}
-
-	public void setTextures(String value, String signature) {
-		this.gameProfile.getProperties().removeAll("textures");
-		this.gameProfile.getProperties().put("textures", new WrappedSignedProperty("textures", value, signature));
-	}
-
-	public void updateGameMode() {
-		this.setDirty();
-
-		NPCTabListRunner tabListRunner = this.registry.getRunnerManager().getRunner(NPCRunnerType.TABLIST);
-		if (tabListRunner != null) {
-			for (Player player : this.getVisible()) {
-				tabListRunner.queue(player, PlayerInfoAction.UPDATE_GAME_MODE, this);
-			}
-		}
-	}
-
-	public void updateLatancy() {
-		this.setDirty();
-
-		NPCTabListRunner tabListRunner = this.registry.getRunnerManager().getRunner(NPCRunnerType.TABLIST);
-		if (tabListRunner != null) {
-			for (Player player : this.getVisible()) {
-				tabListRunner.queue(player, PlayerInfoAction.UPDATE_LATENCY, this);
-			}
-		}
-	}
-
-	public void updateGameProfile() {
-		this.setDirty();
-		this.respawn();
-	}
-
-	public void setTabListVisiblity(boolean tabListVisiblity) {
-		this.tabListVisiblity = tabListVisiblity;
-	}
-
-	public boolean isTabListVisiblity() {
-		return tabListVisiblity;
-	}
-
-	public int getLatency() {
-		return this.latency;
-	}
-
-	public NativeGameMode getGameMode() {
-		return this.gameMode;
-	}
-
-	public WrappedGameProfile getGameProfile() {
-		return this.gameProfile;
-	}
-
 	public NPCEquipment getEquipment() {
 		return this.equipment;
+	}
+
+	public NPCTabListable getTabListable() {
+		return this.tabListable;
 	}
 }

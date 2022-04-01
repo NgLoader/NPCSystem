@@ -26,6 +26,7 @@ public abstract class NPCRunner<T> implements Runnable {
 	}
 
 	public abstract boolean addNPC(NPC npc);
+	public abstract boolean removeNPC(NPC npc);
 
 	public NPCRegistry getRegistry() {
 		return this.registry;

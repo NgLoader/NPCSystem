@@ -25,7 +25,7 @@ public class NPCTabListQueue implements Runnable {
 
 	public final Player player;
 
-	public final Map<PlayerInfoAction, Set<ITabListable>> queue = new HashMap<>();
+	public final Map<PlayerInfoAction, Set<NPCTabListable>> queue = new HashMap<>();
 
 	private long maxDespawnHold = System.currentTimeMillis() + 15000;
 	boolean sendRemovePacket = false;
@@ -38,9 +38,9 @@ public class NPCTabListQueue implements Runnable {
 
 	@Override
 	public void run() {
-		for (Iterator<Entry<PlayerInfoAction, Set<ITabListable>>> iterator = this.queue.entrySet().iterator(); iterator.hasNext();) {
-			Entry<PlayerInfoAction, Set<ITabListable>> entry = iterator.next();
-			Set<ITabListable> queue = entry.getValue();
+		for (Iterator<Entry<PlayerInfoAction, Set<NPCTabListable>>> iterator = this.queue.entrySet().iterator(); iterator.hasNext();) {
+			Entry<PlayerInfoAction, Set<NPCTabListable>> entry = iterator.next();
+			Set<NPCTabListable> queue = entry.getValue();
 			if (queue == null || queue.isEmpty()) {
 				iterator.remove();
 				return;
@@ -52,19 +52,19 @@ public class NPCTabListQueue implements Runnable {
 				}
 			}
 
-			Set<ITabListable> tabListableRemoved = new HashSet<ITabListable>(queue);
+			Set<NPCTabListable> tabListableRemoved = new HashSet<NPCTabListable>(queue);
 			this.handle(entry.getKey(), tabListableRemoved);
 			queue.removeAll(tabListableRemoved);
 		}
 	}
 
-	private void handle(PlayerInfoAction action, Set<ITabListable> queue) {
+	private void handle(PlayerInfoAction action, Set<NPCTabListable> queue) {
 		if (queue.isEmpty()) {
 			return;
 		}
 
 		List<PlayerInfoData> playerInfoDatas = new ArrayList<>();
-		for (ITabListable tabListable : queue) {
+		for (NPCTabListable tabListable : queue) {
 			playerInfoDatas.add(tabListable.getPlayerInfoData());
 		}
 
@@ -79,8 +79,8 @@ public class NPCTabListQueue implements Runnable {
 		}
 	}
 
-	public void queue(PlayerInfoAction action, ITabListable tabListable) {
-		Set<ITabListable> actionQueue = this.queue.get(action);
+	public void queue(PlayerInfoAction action, NPCTabListable tabListable) {
+		Set<NPCTabListable> actionQueue = this.queue.get(action);
 		if (actionQueue == null) {
 			actionQueue = new HashSet<>();
 			this.queue.put(action, actionQueue);

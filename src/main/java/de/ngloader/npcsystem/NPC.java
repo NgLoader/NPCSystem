@@ -19,9 +19,13 @@ import com.comphenix.protocol.events.PacketContainer;
 
 import de.ngloader.npcsystem.event.NPCCreatedEvent;
 import de.ngloader.npcsystem.event.NPCDeletedEvent;
+import de.ngloader.npcsystem.event.NPCPacketCreateEvent;
+import de.ngloader.npcsystem.event.NPCPacketCreateEvent.PacketState;
+import de.ngloader.npcsystem.event.NPCPacketCreateEvent.PacketType;
 import de.ngloader.npcsystem.event.NPCVisibilityChangeEvent;
 import de.ngloader.npcsystem.property.NPCProperties;
 import de.ngloader.npcsystem.runner.NPCRunner;
+import de.ngloader.npcsystem.runner.NPCRunnerManager;
 import de.ngloader.npcsystem.runner.NPCRunnerType;
 
 public abstract class NPC {
@@ -33,10 +37,10 @@ public abstract class NPC {
 
 	protected final int entityId;
 
-	protected NPCProperties properties = new NPCProperties();
-
 	protected Location location;
 	protected double range = 40 * 40;
+
+	protected NPCProperties properties = new NPCProperties();
 
 	protected Set<Player> inRange = Collections.newSetFromMap(new WeakHashMap<>());
 	protected Set<Player> viewers = Collections.newSetFromMap(new WeakHashMap<>());
@@ -70,8 +74,14 @@ public abstract class NPC {
 
 		this.spawnPackets.clear();
 		this.despawnPackets.clear();
+
+		Bukkit.getPluginManager().callEvent(new NPCPacketCreateEvent(this, PacketType.SPAWN, PacketState.PRE, this.spawnPackets));
 		this.createSpawnPackets();
+		Bukkit.getPluginManager().callEvent(new NPCPacketCreateEvent(this, PacketType.SPAWN, PacketState.AFTER, this.spawnPackets));
+
+		Bukkit.getPluginManager().callEvent(new NPCPacketCreateEvent(this, PacketType.DESPAWN, PacketState.PRE, this.despawnPackets));
 		this.createDespawnPackets();
+		Bukkit.getPluginManager().callEvent(new NPCPacketCreateEvent(this, PacketType.DESPAWN, PacketState.AFTER, this.despawnPackets));
 
 		this.callEvent(new NPCCreatedEvent(this));
 		return (T) this;
@@ -85,12 +95,16 @@ public abstract class NPC {
 	protected void onPreDespawn(Player player) { }
 	protected void onDespawn(Player player) { }
 
+	protected void onDestroy() { }
+
 	public abstract void updateLocation();
 
 	protected void spawn(Player player) {
 		if (this.dirty) {
 			this.spawnPackets.clear();
+			Bukkit.getPluginManager().callEvent(new NPCPacketCreateEvent(this, PacketType.SPAWN, PacketState.PRE, this.spawnPackets));
 			this.createSpawnPackets();
+			Bukkit.getPluginManager().callEvent(new NPCPacketCreateEvent(this, PacketType.SPAWN, PacketState.AFTER, this.spawnPackets));
 			this.dirty = false;
 		}
 		this.onPreSpawn(player);
@@ -187,10 +201,21 @@ public abstract class NPC {
 	}
 
 	public void addToRunner(NPCRunnerType... types) {
+		NPCRunnerManager manager = this.registry.getRunnerManager();
 		for (NPCRunnerType type : types) {
-			NPCRunner<?> runner = this.registry.getRunnerManager().getRunner(type);
+			NPCRunner<?> runner = manager.getRunner(type);
 			if (runner != null) {
 				runner.addNPC(this);
+			}
+		}
+	}
+
+	public void removeToRunner(NPCRunnerType... types) {
+		NPCRunnerManager manager = this.registry.getRunnerManager();
+		for (NPCRunnerType type : types) {
+			NPCRunner<?> runner = manager.getRunner(type);
+			if (runner != null) {
+				runner.removeNPC(this);
 			}
 		}
 	}
@@ -204,6 +229,7 @@ public abstract class NPC {
 	public void destroy() {
 		Bukkit.getPluginManager().callEvent(new NPCDeletedEvent(this));
 
+		this.onDestroy();
 		this.registry.npcs.remove(this);
 		this.manager.npcByEntityId.remove(this.entityId);
 		this.viewers.forEach(this::hide);

@@ -27,6 +27,13 @@ public class NPCEntityLiving extends NPCEntity {
 		this.setHealth(1);
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		this.manager.giveBackUUID(this.uuid);
+	}
+
 	public void updateEntityLook(float yaw, float pitch) {
 		this.location.setYaw(yaw);
 		this.location.setPitch(pitch);
