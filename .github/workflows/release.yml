@@ -42,7 +42,7 @@ jobs:
         token: ${{ secrets.GH_PACKAGE_REPO_PASSWORD  }}
 
     - name: Create maven settings
-      uses: s4u/maven-settings-action@v2.4.0
+      uses: s4u/maven-settings-action@v2.6.0
       with:
         servers: '[{ "id": "nexus", "username": "${{ secrets.NEXUS_DEPLOYMENT_NAME }}", "password": "${{ secrets.NEXUS_DEPLOYMENT }}" }]'
     - name: Publish to Nexus releases
