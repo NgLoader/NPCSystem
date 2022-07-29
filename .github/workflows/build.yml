@@ -48,7 +48,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_REPO_PASSWORD }}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Plugin
         path: dist/
