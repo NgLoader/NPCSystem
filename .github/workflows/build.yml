@@ -23,7 +23,7 @@ jobs:
         distribution: 'adopt'
  
     - name: BuildTools cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.m2/repository/org/spigotmc
         key: ${{ runner.os }}-maven-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./.github/workflows/buildtools.sh') }}
