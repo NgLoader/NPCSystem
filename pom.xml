@@ -10,15 +10,9 @@
 	<properties>
 		<revision>1.6.8</revision>
 
-<<<<<<< Updated upstream
-		<dependency.bukkit.version>1.18.2-R0.1-SNAPSHOT</dependency.bukkit.version>
-		<dependency.protocollib.version>4.8.0</dependency.protocollib.version>
-		<dependency.bstats.version>3.0.0</dependency.bstats.version>
-=======
 		<dependency.bukkit.version>1.19-R0.1-SNAPSHOT</dependency.bukkit.version>
 		<dependency.protocollib.version>4.8.0-SNAPSHOT</dependency.protocollib.version>
 		<dependency.bstats.version>2.2.1</dependency.bstats.version>
->>>>>>> Stashed changes
 
 		<plugin.specialsource.version>1.2.4</plugin.specialsource.version>
 		<plugin.nexus-staging.version>1.6.7</plugin.nexus-staging.version>
