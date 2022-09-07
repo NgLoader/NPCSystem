@@ -10,17 +10,23 @@
 	<properties>
 		<revision>1.6.8</revision>
 
+<<<<<<< Updated upstream
 		<dependency.bukkit.version>1.18.2-R0.1-SNAPSHOT</dependency.bukkit.version>
 		<dependency.protocollib.version>4.8.0</dependency.protocollib.version>
 		<dependency.bstats.version>3.0.0</dependency.bstats.version>
+=======
+		<dependency.bukkit.version>1.19-R0.1-SNAPSHOT</dependency.bukkit.version>
+		<dependency.protocollib.version>4.8.0-SNAPSHOT</dependency.protocollib.version>
+		<dependency.bstats.version>2.2.1</dependency.bstats.version>
+>>>>>>> Stashed changes
 
 		<plugin.specialsource.version>1.2.4</plugin.specialsource.version>
 		<plugin.nexus-staging.version>1.6.7</plugin.nexus-staging.version>
 		<plugin.deploy.version>2.8.2</plugin.deploy.version>
 
-		<maven.compiler.source>16</maven.compiler.source>
-		<maven.compiler.target>16</maven.compiler.target>
-		<java.version>16</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<java.version>17</java.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

@@ -1,6 +1,8 @@
 package de.ngloader.npcsystem.npc.entity.hologram;
 
 import de.ngloader.npcsystem.npc.entity.NPCArmorStand;
+import de.ngloader.npcsystem.util.NPCUtil;
+import net.md_5.bungee.api.chat.BaseComponent;
 
 public class NPCHologramLine {
 
@@ -8,33 +10,35 @@ public class NPCHologramLine {
 	private final NPCArmorStand npc;
 
 	private double space;
-	private String text;
+	private BaseComponent text;
 
-	public NPCHologramLine(NPCHologram hologram, NPCArmorStand npc, double space, String text) {
+	public NPCHologramLine(NPCHologram hologram, NPCArmorStand npc, double space, BaseComponent... text) {
 		this.hologram = hologram;
 		this.npc = npc;
 		this.space = space;
-		this.text = text;
+		this.text = NPCUtil.mergeBaseComponent(text);
 	}
 
 	public double getSpace() {
 		return this.space;
 	}
 
-	public void setSpace(double space) {
+	public NPCHologramLine setSpace(double space) {
 		this.space = space;
 		this.hologram.rescale();
+		return this;
 	}
 
-	public String getText() {
+	public BaseComponent getText() {
 		return this.text;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public NPCHologramLine setText(BaseComponent... text) {
+		this.text = NPCUtil.mergeBaseComponent(text);
 
 		this.npc.setCustomName(this.text);
 		this.npc.updateDataWatcher();
+		return this;
 	}
 
 	public NPCArmorStand getNPC() {

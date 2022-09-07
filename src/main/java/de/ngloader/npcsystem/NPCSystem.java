@@ -20,11 +20,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.ngloader.npcsystem.api.scoreboard.ScoreboardManager;
 import de.ngloader.npcsystem.runner.NPCRunnerManager;
 import de.ngloader.npcsystem.runner.NPCRunnerType;
 import de.ngloader.npcsystem.runner.type.tablist.NPCTabListRunner;
+import de.ngloader.npcsystem.scoreboard.SharedScoreboardManager;
 import net.minecraft.world.entity.Entity;
 
 public class NPCSystem implements Listener {
@@ -56,6 +59,8 @@ public class NPCSystem implements Listener {
 
 	private final NPCPacketListener packetListener;
 
+	private final ScoreboardManager scoreboardManager;
+
 	public NPCSystem(Plugin plugin) throws IllegalArgumentException, IllegalAccessException {
 		this.plugin = plugin;
 
@@ -70,6 +75,9 @@ public class NPCSystem implements Listener {
 		this.registries.add(this.defaultRegistry);
 		
 		this.packetListener = new NPCPacketListener(this);
+		this.scoreboardManager = new SharedScoreboardManager(this.plugin);
+
+		Bukkit.getServicesManager().register(ScoreboardManager.class, this.scoreboardManager, this.plugin, ServicePriority.Normal);
 
 		Bukkit.getPluginManager().registerEvents(this, this.plugin);
 
@@ -142,6 +150,10 @@ public class NPCSystem implements Listener {
 
 	public NPCPacketListener getPacketListener() {
 		return this.packetListener;
+	}
+
+	public ScoreboardManager getScoreboardManager() {
+		return this.scoreboardManager;
 	}
 
 	public Plugin getPlugin() {

@@ -8,17 +8,18 @@ import org.bukkit.entity.Pose;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.WrappedDataWatcherObject;
 
 import de.ngloader.npcsystem.NPC;
 import de.ngloader.npcsystem.NPCRegistry;
+import de.ngloader.npcsystem.util.NPCUtil;
 import de.ngloader.npcsystem.wrapper.EntityAnimation;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
 import de.ngloader.npcsystem.wrapper.EntityIndex;
 import de.ngloader.npcsystem.wrapper.EntityStatus;
+import net.md_5.bungee.api.chat.BaseComponent;
 
 public class NPCEntity extends NPC {
 
@@ -91,8 +92,8 @@ public class NPCEntity extends NPC {
 		this.sendPacket(packet);
 	}
 
-	public void setCustomName(String name) {
-		Optional<?> optional = name != null ? Optional.of(WrappedChatComponent.fromText(name).getHandle()) : Optional.empty();
+	public void setCustomName(BaseComponent... name) {
+		Optional<?> optional = name != null ? Optional.of(NPCUtil.mergeBaseComponentWrapped(name).getHandle()) : Optional.empty();
 		if (!this.dataWatcher.hasIndex(EntityIndex.ENTITY_CUSTOM_NAME_2.getIndex())) {
 			this.dataWatcher.setObject(new WrappedDataWatcherObject(2, WrappedDataWatcher.Registry.getChatComponentSerializer(true)), optional);
 			return;
@@ -103,7 +104,7 @@ public class NPCEntity extends NPC {
 	public void setIsOnFire(boolean onFire) {
 		this.setFlag(EntityFlag.ENTITY_IS_ON_FIRE, onFire);
 	}
-
+	
 	public void setIsCrouching(boolean crouching) {
 		this.setFlag(EntityFlag.ENTITY_IS_CROUCHING, crouching);
 	}

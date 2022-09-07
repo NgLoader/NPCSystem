@@ -5,11 +5,11 @@
 
 ### Features
 * Plug & Play
-* Support for Spigot based servers 1.17+ 
+* Support for Spigot based servers 1.19+ 
 
 ## Requirements
-- Java 16 or higher
-- Spigot and (proably) any other fork of Spigot (1.17 or higher)
+- Java 17 or higher
+- Spigot and (proably) any other fork of Spigot (1.19 or higher)
 - [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997) latest
 
 ## Developer

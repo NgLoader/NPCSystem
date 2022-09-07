@@ -20,12 +20,10 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.EnumWrappers.EntityUseAction;
 import com.comphenix.protocol.wrappers.EnumWrappers.Hand;
-import com.comphenix.protocol.wrappers.EnumWrappers.PlayerInfoAction;
 import com.comphenix.protocol.wrappers.WrappedEnumEntityUseAction;
 
 import de.ngloader.npcsystem.event.NPCInteractEvent;
 import de.ngloader.npcsystem.npc.entity.NPCPlayer;
-import de.ngloader.npcsystem.runner.NPCRunnerType;
 
 public class NPCPacketListener extends PacketAdapter {
 

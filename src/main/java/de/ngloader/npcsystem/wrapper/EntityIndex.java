@@ -1,5 +1,7 @@
 package de.ngloader.npcsystem.wrapper;
 
+import org.bukkit.entity.Frog;
+
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
@@ -26,6 +28,8 @@ import net.minecraft.world.entity.animal.SnowGolem;
 import net.minecraft.world.entity.animal.TropicalFish;
 import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
+import net.minecraft.world.entity.animal.goat.Goat;
 import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Horse;
@@ -35,6 +39,7 @@ import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.entity.decoration.Painting;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
@@ -54,10 +59,13 @@ import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.monster.Zoglin;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.monster.piglin.Piglin;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
@@ -144,6 +152,8 @@ public enum EntityIndex {
 	ITEM_FRAME_ITEM_8(ItemFrame.class),
 	ITEM_FRAME_ROTATION_9(ItemFrame.class),
 
+	PAINTING_VARIANT_8(Painting.class),
+
 	ITEM_ENTITY_ITEM_8(ItemEntity.class),
 
 	LIVING_ENTITY_FLAG_8(LivingEntity.class),
@@ -196,6 +206,10 @@ public enum EntityIndex {
 	LLAMA_CARPET_COLOR_21(Llama.class),
 	LLAMA_VARIANT_22(Llama.class),
 
+	AXOLOTL_VARIANT_17(Axolotl.class),
+	AXOLOTL_IF_IT_CURRENTLY_PLAYING_DEAD_18(Axolotl.class),
+	AXOLOTL_IF_IT_WAS_SPANED_FROM_A_BUCKET_19(Axolotl.class),
+
 	BEE_FLAG_17(Bee.class),
 	BEE_ANGER_TIME_18(Bee.class),
 
@@ -203,6 +217,9 @@ public enum EntityIndex {
 	FOX_FLAG_18(Fox.class),
 	FOX_FIRST_UUID_19(Fox.class),
 	FOX_SECOND_UUID_20(Fox.class),
+
+	FROG_VARIANT_17(Frog.class),
+	FROG_TONGUE_TARGET_18(Frog.class),
 
 	OCELOT_IS_TRUSTING_17(Ocelot.class),
 
@@ -229,7 +246,7 @@ public enum EntityIndex {
 
 	HOGLIN_IS_IMMMUNE_17(Hoglin.class),
 
-	MOOSHROOM_VARIANT(MushroomCow.class),
+	MOOSHROOM_VARIANT_17(MushroomCow.class),
 
 	SHEEP_FLAG_17(Sheep.class),
 
@@ -251,7 +268,9 @@ public enum EntityIndex {
 
 	PARROT_VARIANT_19(Parrot.class),
 
-	ABSTRACT_VILLAGER_VILLGER_DATA_18(AbstractVillager.class),
+	ABSTRACT_VILLAGER_VILLGER_DATA_17(AbstractVillager.class),
+
+	VILLAGER_DATA_18(Villager.class),
 
 	IRON_GOLEM_FLAG_16(IronGolem.class),
 
@@ -274,6 +293,10 @@ public enum EntityIndex {
 	CREEPER_IS_CHARGED_17(Creeper.class),
 	CREEPER_IS_IGNITED_18(Creeper.class),
 
+	GOAT_IS_SCREAMING_GOAT_17(Goat.class),
+	GOAT_HAS_LEFT_HORN_18(Goat.class),
+	GOAT_HAS_RIGHT_HORN_19(Goat.class),
+
 	GUARDIAN_IS_RETRACTING_SPIKES_16(Guardian.class),
 	GUARDIAN_TARGET_ENTITY_ID_17(Guardian.class),
 
@@ -289,6 +312,8 @@ public enum EntityIndex {
 
 	SPIDER_FLAG_16(Spider.class),
 
+	WARDEN_ANGER_LEVEL_16(Warden.class),
+
 	WITHER_CENTER_HEADS_TARGET_ID_16(WitherBoss.class),
 	WITHER_LEFT_HEADS_TARGET_ID_17(WitherBoss.class),
 	WITHER_RIGHT_HEADS_TARGET_ID_18(WitherBoss.class),
@@ -299,6 +324,9 @@ public enum EntityIndex {
 	ZOMBIE_IS_BABY_16(Zombie.class),
 	ZOMBIE_UNUSED_17(Zombie.class),
 	ZOMBIE_IS_BECOMING_A_DROWNED_18(Zombie.class),
+
+	ZOMBIE_VILLAGER_IS_CONVERTING_19(ZombieVillager.class),
+	ZOMBIE_VILLAGER_DATA_20(ZombieVillager.class),
 
 	ENDERMAN_CARRIED_BLOCK_16(EnderMan.class),
 	ENDERMAN_IS_SCREAMING_17(EnderMan.class),

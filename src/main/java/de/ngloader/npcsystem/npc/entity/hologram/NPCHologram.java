@@ -7,6 +7,7 @@ import org.bukkit.Location;
 
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.entity.NPCArmorStand;
+import net.md_5.bungee.api.chat.BaseComponent;
 
 public class NPCHologram {
 
@@ -24,29 +25,25 @@ public class NPCHologram {
 		this.location = location;
 	}
 
-	public NPCHologram addLine(String text, int space) {
-		this.addLine(text);
-		this.lines.get(this.lines.size() - 1).setSpace(space);
-		return this;
-	}
+	public NPCHologramLine addLine(BaseComponent... text) {
+		NPCArmorStand npc = new NPCArmorStand(this.registry, this.location);
+		npc.setCustonNameVisible(true);
+		npc.setHasNoGravity(true);
+		npc.setIsInvisible(true);
+		npc.create();
 
-	public NPCHologram addLine(String... texts) {
-		for (String text : texts) {
-			NPCArmorStand npc = new NPCArmorStand(this.registry, this.location);
-			npc.setCustonNameVisible(true);
-			npc.setHasNoGravity(true);
-			npc.setIsInvisible(true);
-			npc.create();
-
-			NPCHologramLine line = new NPCHologramLine(this, npc, 0, text);
-			this.lines.add(line);
-		}
+		NPCHologramLine line = new NPCHologramLine(this, npc, 0, text);
+		this.lines.add(line);
 
 		this.rescale();
-		return this;
+		return line;
 	}
 
-	public NPCHologram setLine(int line, String text) {
+	public NPCHologramLine addLine(int space, BaseComponent... text) {
+		return this.addLine(text).setSpace(space);
+	}
+
+	public NPCHologram setLine(int line, BaseComponent... text) {
 		NPCHologramLine hologramLine = this.getLine(line);
 		if (hologramLine != null) {
 			hologramLine.setText(text);

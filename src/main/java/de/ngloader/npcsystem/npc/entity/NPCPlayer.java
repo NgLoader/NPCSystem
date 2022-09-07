@@ -14,20 +14,33 @@ import com.comphenix.protocol.wrappers.PlayerInfoData;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 
 import de.ngloader.npcsystem.NPCRegistry;
+import de.ngloader.npcsystem.api.scoreboard.Scoreboard;
+import de.ngloader.npcsystem.api.scoreboard.ScoreboardTeam;
 import de.ngloader.npcsystem.npc.feature.NPCEquipment;
 import de.ngloader.npcsystem.npc.type.NPCEntityLiving;
 import de.ngloader.npcsystem.runner.type.tablist.NPCTabListable;
+import de.ngloader.npcsystem.util.NPCUtil;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
 import de.ngloader.npcsystem.wrapper.EntityIndex;
+import net.md_5.bungee.api.chat.BaseComponent;
 
 public class NPCPlayer extends NPCEntityLiving {
 
 	private final NPCEquipment equipment = new NPCEquipment(this, this::sendPacket);
 	private final NPCTabListable tabListable = new NPCTabListable(this);
 
-	public NPCPlayer(NPCRegistry registry, Location location, String name) {
+	private BaseComponent displayName;
+	private ScoreboardTeam displayNameTeam;
+
+	public NPCPlayer(NPCRegistry registry, Location location, BaseComponent name) {
 		super(registry, 1.62d, location);
-		this.tabListable.setGameProfile(new WrappedGameProfile(this.uuid, name));
+		this.tabListable.setGameProfile(new WrappedGameProfile(this.uuid, NPCUtil.createHashCode(this)));
+
+		Scoreboard scoreboard = this.manager.getScoreboardManager().getGlobalScoreboard();
+		this.displayNameTeam = scoreboard.createTeam("npc_inbisible_" + this.tabListable.getGameProfile().getName())
+				.setPrefix(this.displayName)
+				.addEntry(this.tabListable.getGameProfile().getName());
+		this.setCustonNameVisible(false);
 
 		this.setFlag(EntityFlag.PLAYER_HAT, true);
 		this.setFlag(EntityFlag.PLAYER_CAPE, true);
@@ -83,6 +96,15 @@ public class NPCPlayer extends NPCEntityLiving {
 		super.onDestroy();
 
 		this.tabListable.destroy();
+	}
+
+	public void setDisplayName(BaseComponent... displayName) {
+		this.displayName = NPCUtil.mergeBaseComponent(displayName);
+		this.displayNameTeam.setPrefix(this.displayName);
+	}
+
+	public BaseComponent getDisplayName() {
+		return this.displayName;
 	}
 
 	public void setAdditionalHearts(float hearts) {
