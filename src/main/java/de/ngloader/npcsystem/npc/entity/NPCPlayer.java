@@ -34,10 +34,12 @@ public class NPCPlayer extends NPCEntityLiving {
 
 	public NPCPlayer(NPCRegistry registry, Location location, BaseComponent name) {
 		super(registry, 1.62d, location);
+		this.displayName = name;
+
 		this.tabListable.setGameProfile(new WrappedGameProfile(this.uuid, NPCUtil.createHashCode(this)));
 
 		Scoreboard scoreboard = this.manager.getScoreboardManager().getGlobalScoreboard();
-		this.displayNameTeam = scoreboard.createTeam("npc_inbisible_" + this.tabListable.getGameProfile().getName())
+		this.displayNameTeam = scoreboard.createTeam("npc_invisible_" + this.tabListable.getGameProfile().getName())
 				.setPrefix(this.displayName)
 				.addEntry(this.tabListable.getGameProfile().getName());
 		this.setCustonNameVisible(false);
@@ -96,6 +98,10 @@ public class NPCPlayer extends NPCEntityLiving {
 		super.onDestroy();
 
 		this.tabListable.destroy();
+	}
+
+	public void setTexture(String value, String signature) {
+		this.tabListable.setTextures(value, signature);
 	}
 
 	public void setDisplayName(BaseComponent... displayName) {

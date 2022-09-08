@@ -1,7 +1,5 @@
 package de.ngloader.npcsystem.runner.type;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -86,12 +84,8 @@ public class NPCLookRunner extends NPCRunner<NPCEntityLiving> {
 		headRotation.getIntegers().write(0, entity.getEntityId());
 		headRotation.getBytes().write(0, (byte) ((int) (yaw * 256F / 360F)));
 
-		try {
-			this.protocolManager.sendServerPacket(player, packet);
-			this.protocolManager.sendServerPacket(player, headRotation);
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		this.protocolManager.sendServerPacket(player, packet);
+		this.protocolManager.sendServerPacket(player, headRotation);
 	}
 
 	@Override

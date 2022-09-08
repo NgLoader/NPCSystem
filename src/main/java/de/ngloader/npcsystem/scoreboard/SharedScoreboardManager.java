@@ -1,6 +1,5 @@
 package de.ngloader.npcsystem.scoreboard;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -42,34 +41,22 @@ public class SharedScoreboardManager implements Runnable, Listener, ScoreboardMa
 
 	void sendPacket(Set<Player> players, List<PacketContainer> packets) {
 		for (Player player : players) {
-			try {
-				for (PacketContainer packet : packets) {
-						this.protocolManager.sendServerPacket(player, packet);
-				}
-			} catch (InvocationTargetException e) {
-				throw new IllegalStateException("Unable to send packet to " + player.getName(), e);
+			for (PacketContainer packet : packets) {
+				this.protocolManager.sendServerPacket(player, packet);
 			}
 		}
 	}
 
 	void sendPacket(Player player, List<PacketContainer> packets) {
-		try {
-			for (PacketContainer packet : packets) {
-					this.protocolManager.sendServerPacket(player, packet);
-			}
-		} catch (InvocationTargetException e) {
-			throw new IllegalStateException("Unable to send packet to " + player.getName(), e);
+		for (PacketContainer packet : packets) {
+			this.protocolManager.sendServerPacket(player, packet);
 		}
 	}
 
 	void sendPacket(Player[] players, PacketContainer... packets) {
 		for (Player player : players) {
-			try {
-				for (PacketContainer packet : packets) {
-						this.protocolManager.sendServerPacket(player, packet);
-				}
-			} catch (InvocationTargetException e) {
-				throw new IllegalStateException("Unable to send packet to " + player.getName(), e);
+			for (PacketContainer packet : packets) {
+				this.protocolManager.sendServerPacket(player, packet);
 			}
 		}
 	}
@@ -129,7 +116,8 @@ public class SharedScoreboardManager implements Runnable, Listener, ScoreboardMa
 	}
 
 	@Override
-	public SharedScoreboardManager unassignDisplaySlot(DisplaySlot slot, DisplaySlot slot2, DisplaySlot slot3, Player... players) {
+	public SharedScoreboardManager unassignDisplaySlot(DisplaySlot slot, DisplaySlot slot2, DisplaySlot slot3,
+			Player... players) {
 		return this.unassignDisplaySlot(new DisplaySlot[] { slot, slot2, slot3 }, players);
 	}
 

@@ -7,13 +7,13 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
 
 import de.ngloader.npcsystem.NPCRegistry;
-import de.ngloader.npcsystem.npc.NPCSpawnEntityLiving;
+import de.ngloader.npcsystem.npc.NPCSpawnEntity;
 import de.ngloader.npcsystem.npc.feature.NPCEquipment;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
 import de.ngloader.npcsystem.wrapper.EntityIndex;
 import net.minecraft.world.entity.EntityType;
 
-public class NPCArmorStand extends NPCSpawnEntityLiving {
+public class NPCArmorStand extends NPCSpawnEntity {
 
 	private static final Serializer VECTOR3F_SERIALIZER = WrappedDataWatcher.Registry.getVectorSerializer();
 

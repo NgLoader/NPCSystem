@@ -1,7 +1,5 @@
 package de.ngloader.npcsystem.wrapper;
 
-import org.bukkit.entity.Frog;
-
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
@@ -29,6 +27,7 @@ import net.minecraft.world.entity.animal.TropicalFish;
 import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.axolotl.Axolotl;
+import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.animal.goat.Goat;
 import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;

@@ -1,7 +1,5 @@
 package de.ngloader.npcsystem.util;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -65,11 +63,7 @@ public class NPCUtil {
 		headRotation.getIntegers().write(0, entity.getEntityId());
 		headRotation.getBytes().write(0, (byte) ((int) (yaw * 256F / 360F)));
 
-		try {
-			PROTOCOL_MANAGER.sendServerPacket(player, packet);
-			PROTOCOL_MANAGER.sendServerPacket(player, headRotation);
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		PROTOCOL_MANAGER.sendServerPacket(player, packet);
+		PROTOCOL_MANAGER.sendServerPacket(player, headRotation);
 	}
 }

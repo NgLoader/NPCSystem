@@ -1,6 +1,5 @@
 package de.ngloader.npcsystem.runner.type.tablist;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -72,11 +71,7 @@ public class NPCTabListQueue implements Runnable {
 		packetContainer.getPlayerInfoAction().write(0, action);
 		packetContainer.getPlayerInfoDataLists().write(0, playerInfoDatas);
 
-		try {
-			this.protocolManager.sendServerPacket(player, packetContainer);
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		this.protocolManager.sendServerPacket(player, packetContainer);
 	}
 
 	public void queue(PlayerInfoAction action, NPCTabListable tabListable) {

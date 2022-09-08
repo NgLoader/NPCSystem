@@ -1,6 +1,5 @@
 package de.ngloader.npcsystem;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -177,12 +176,8 @@ public abstract class NPC {
 	}
 
 	protected void sendPacket(Player player, PacketContainer... packets) {
-		try {
-			for (PacketContainer packet : packets) {
-				this.protocolManager.sendServerPacket(player, packet);
-			}
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+		for (PacketContainer packet : packets) {
+			this.protocolManager.sendServerPacket(player, packet);
 		}
 	}
 
@@ -191,12 +186,8 @@ public abstract class NPC {
 	}
 
 	protected void sendPacket(Player player, List<PacketContainer> packets) {
-		try {
-			for (PacketContainer packet : packets) {
-				this.protocolManager.sendServerPacket(player, packet);
-			}
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+		for (PacketContainer packet : packets) {
+			this.protocolManager.sendServerPacket(player, packet);
 		}
 	}
 

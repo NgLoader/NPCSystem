@@ -31,6 +31,7 @@ public class NPCTabListable {
 		this.displayName = this.uuid.toString().substring(0, 15);
 
 		this.gameProfile = new WrappedGameProfile(this.uuid, this.displayName);
+		this.update();
 	}
 
 	public NPCTabListable(NPC npc, WrappedGameProfile gameProfile) {
