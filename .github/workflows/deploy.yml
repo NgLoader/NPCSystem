@@ -27,7 +27,7 @@ jobs:
         distribution: 'adopt'
   
     - name: Create maven settings
-      uses: s4u/maven-settings-action@v2.6.0
+      uses: s4u/maven-settings-action@v2.8.0
       with:
         servers: '[{ "id": "nexus", "username": "${{ secrets.NEXUS_DEPLOYMENT_NAME }}", "password": "${{ secrets.NEXUS_DEPLOYMENT }}" }]'
     - name: Publish to Nexus snapshots
