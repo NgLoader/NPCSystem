@@ -1,15 +1,15 @@
 package de.ngloader.npcsystem.npc.type;
 
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.NPCSpawnEntity;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
-import net.minecraft.world.entity.EntityType;
 
 public class NPCMob extends NPCSpawnEntity {
 
-	public NPCMob(NPCRegistry registry, double eyeHeight, Location location, EntityType<?> id) {
+	public NPCMob(NPCRegistry registry, double eyeHeight, Location location, EntityType id) {
 		super(registry, eyeHeight, location, id);
 	}
 

@@ -1,6 +1,7 @@
 package de.ngloader.npcsystem.npc.entity;
 
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 
 import com.comphenix.protocol.wrappers.Vector3F;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
@@ -9,7 +10,6 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.type.NPCWaterAnimal;
 import de.ngloader.npcsystem.wrapper.EntityIndex;
-import net.minecraft.world.entity.EntityType;
 
 public class NPCDolphin extends NPCWaterAnimal {
 

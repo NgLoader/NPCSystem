@@ -1,12 +1,12 @@
 package de.ngloader.npcsystem.npc.entity;
 
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.type.NPCAnimal;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
 import de.ngloader.npcsystem.wrapper.EntityIndex;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
 
 public class NPCSheep extends NPCAnimal {

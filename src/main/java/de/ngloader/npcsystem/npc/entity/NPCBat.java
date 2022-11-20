@@ -1,11 +1,11 @@
 package de.ngloader.npcsystem.npc.entity;
 
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 
 import de.ngloader.npcsystem.NPCRegistry;
 import de.ngloader.npcsystem.npc.type.NPCAmbientCreature;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
-import net.minecraft.world.entity.EntityType;
 
 public class NPCBat extends NPCAmbientCreature {
 

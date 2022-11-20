@@ -1,6 +1,7 @@
 package de.ngloader.npcsystem.npc.entity;
 
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 
 import com.comphenix.protocol.wrappers.Vector3F;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
@@ -11,7 +12,6 @@ import de.ngloader.npcsystem.npc.NPCSpawnEntity;
 import de.ngloader.npcsystem.npc.feature.NPCEquipment;
 import de.ngloader.npcsystem.wrapper.EntityFlag;
 import de.ngloader.npcsystem.wrapper.EntityIndex;
-import net.minecraft.world.entity.EntityType;
 
 public class NPCArmorStand extends NPCSpawnEntity {
 
